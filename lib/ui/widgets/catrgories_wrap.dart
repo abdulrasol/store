@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import '../../database/models/category_model.dart';
 import 'category_card.dart';
 
-Column categoriesWrap() {
+Column categoriesWrap({bool withTitle = true}) {
   return Column(
     children: [
-      const Padding(
-        padding: EdgeInsets.fromLTRB(5, 20, 0, 5),
-        child: Text(
-          'Categories',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-      ),
+      withTitle
+          ? const Padding(
+              padding: EdgeInsets.fromLTRB(5, 20, 0, 5),
+              child: Text(
+                'Categories',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            )
+          : const SizedBox(),
       SizedBox(
         width: double.infinity,
         child: Center(
@@ -29,36 +31,28 @@ Column categoriesWrap() {
             spacing: 5,
             children: [
               CategoryCard(
-                category:
-                    CategoryModel('Cat 01', 'assets/imgs/banner1.jpg', ''),
+                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
               ),
               CategoryCard(
-                category:
-                    CategoryModel('Cat 01', 'assets/imgs/banner1.jpg', ''),
+                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
               ),
               CategoryCard(
-                category:
-                    CategoryModel('Cat 01', 'assets/imgs/banner1.jpg', ''),
+                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
               ),
               CategoryCard(
-                category:
-                    CategoryModel('Cat 01', 'assets/imgs/banner1.jpg', ''),
+                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
               ),
               CategoryCard(
-                category:
-                    CategoryModel('Cat 01', 'assets/imgs/banner1.jpg', ''),
+                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
               ),
               CategoryCard(
-                category:
-                    CategoryModel('Cat 01', 'assets/imgs/banner1.jpg', ''),
+                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
               ),
               CategoryCard(
-                category:
-                    CategoryModel('Cat 01', 'assets/imgs/banner1.jpg', ''),
+                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
               ),
               CategoryCard(
-                category:
-                    CategoryModel('Cat 01', 'assets/imgs/banner1.jpg', ''),
+                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
               ),
             ],
           ),

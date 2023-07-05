@@ -13,28 +13,33 @@ class CategoryCard extends StatelessWidget {
       ),
       elevation: 2,
       margin: const EdgeInsets.all(5),
-      child: SizedBox(
-        height: 120,
-        width: 120,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Image.asset(
-                category.image,
-                fit: BoxFit.cover,
+      child: InkWell(
+        onTap: () {},
+        child: SizedBox(
+          height: 150,
+          width: 120,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Center(
+                  child: Image.asset(
+                    category.image,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 8, 8, 6),
-              child: Text(
-                category.name,
-                style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-            )
-          ],
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5, 8, 8, 6),
+                child: Text(
+                  category.name,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

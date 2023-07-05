@@ -13,50 +13,55 @@ class ItemCard extends StatelessWidget {
       ),
       elevation: 2,
       margin: const EdgeInsets.all(5),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Image.asset(
-                item.image,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${item.price}\$",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      //  textAlign: TextAlign.start,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      item.name,
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    )
-                  ],
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.add,
-                    //color: Colors.white10,
+      child: InkWell(
+        onTap: () {},
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Center(
+                  child: Image.asset(
+                    item.image,
+                    fit: BoxFit.cover,
                   ),
-                  //color: Colors.black87,
                 ),
-              ],
-            )
-          ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${item.price}\$",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        //  textAlign: TextAlign.start,
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        item.name,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.add,
+                      //color: Colors.white10,
+                    ),
+                    //color: Colors.black87,
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
