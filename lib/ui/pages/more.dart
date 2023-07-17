@@ -17,9 +17,7 @@ class More extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              Get.to(Orders());
-            },
+            onPressed: () {},
             icon: const Icon(Icons.login),
           ),
           IconButton(
@@ -45,7 +43,9 @@ class More extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Get.to(const Orders());
+            },
             leading: const Icon(
               Icons.shopping_bag,
             ),

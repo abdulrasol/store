@@ -11,6 +11,9 @@ var app = GetMaterialApp(
   debugShowCheckedModeBanner: false,
   theme: ThemeData(
     appBarTheme: AppBarTheme(
+      iconTheme: const IconThemeData(
+        color: Colors.black87,
+      ),
       systemOverlayStyle: SystemUiOverlayStyle.light,
       backgroundColor: Colors.grey[50],
       elevation: 0,

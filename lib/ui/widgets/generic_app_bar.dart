@@ -1,21 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-AppBar genericAppBar({String title = '', bool withBackAction = false}) {
+AppBar genericAppBar({
+  String title = '',
+  bool withBackAction = false,
+  bool centerTitle = false,
+  bool showSearchIcon = true,
+}) {
   return AppBar(
     title: Text(
       title,
       style: const TextStyle(color: Colors.black87),
     ),
+    centerTitle: centerTitle,
     actions: [
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(CupertinoIcons.search),
-      )
+      showSearchIcon
+          ? IconButton(
+              onPressed: () {},
+              icon: const Icon(CupertinoIcons.search),
+            )
+          : const SizedBox()
     ],
     leading: withBackAction
         ? IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.back();
+            },
             icon: const Icon(
               CupertinoIcons.back,
               color: Colors.black87,
@@ -23,3 +34,5 @@ AppBar genericAppBar({String title = '', bool withBackAction = false}) {
         : null,
   );
 }
+
+const SizedBox sizedBox = SizedBox(height: 20);

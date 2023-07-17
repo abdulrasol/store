@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:store/database/models/item_model.dart';
+import 'package:store/ui/pages/item.dart';
 
 class ItemCard extends StatelessWidget {
   final ItemModel item;
@@ -14,7 +16,9 @@ class ItemCard extends StatelessWidget {
       elevation: 2,
       margin: const EdgeInsets.all(5),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Get.to(const ItemPage());
+        },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

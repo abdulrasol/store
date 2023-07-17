@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:store/database/models/category_model.dart';
+
+import '../pages/category.dart';
 
 class CategoryCard extends StatelessWidget {
   final CategoryModel category;
@@ -14,7 +17,9 @@ class CategoryCard extends StatelessWidget {
       elevation: 2,
       margin: const EdgeInsets.all(5),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Get.to(const CategoryPage());
+        },
         child: SizedBox(
           height: 150,
           width: 120,
