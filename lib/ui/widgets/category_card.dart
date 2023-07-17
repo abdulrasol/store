@@ -18,7 +18,7 @@ class CategoryCard extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
-          Get.to(const CategoryPage());
+          Get.to(() => const CategoryPage());
         },
         child: SizedBox(
           height: 150,

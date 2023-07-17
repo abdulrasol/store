@@ -28,7 +28,7 @@ Widget homeSection(
           itemBuilder: (context, index) {
             return SizedBox(
               width: 190,
-              height: 190,
+              // height: 190,
               child: ItemCard(
                 item: ItemModel('Item 1', 10, 'dd', 1, 1,
                     'assets/imgs/item2.png', 'description'),

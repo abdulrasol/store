@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:store/database/models/category_model.dart';
+import 'package:store/ui/widgets/category_card.dart';
 
 import '../../database/models/item_model.dart';
 import '../widgets/generic_app_bar.dart';
@@ -31,29 +34,8 @@ class CategoryPage extends StatelessWidget {
                 spacing: 5,
                 children: [
                   ItemCard(
-                    item: ItemModel('Item 1', 10, 'dd', 1, 1,
-                        'assets/imgs/item2.png', 'description'),
-                  ),
-                  ItemCard(
-                    item: ItemModel('Item 1', 10, 'dd', 1, 1,
-                        'assets/imgs/item2.png', 'description'),
-                  ),
-                  ItemCard(
-                    item: ItemModel('Item 1', 10, 'dd', 1, 1,
-                        'assets/imgs/item2.png', 'description'),
-                  ),
-                  ItemCard(
-                    item: ItemModel('Item 1', 10, 'dd', 1, 1,
-                        'assets/imgs/item2.png', 'description'),
-                  ),
-                  ItemCard(
-                    item: ItemModel('Item 1', 10, 'dd', 1, 1,
-                        'assets/imgs/item2.png', 'description'),
-                  ),
-                  ItemCard(
-                    item: ItemModel('Item 1', 10, 'dd', 1, 1,
-                        'assets/imgs/item2.png', 'description'),
-                  ),
+                      item: ItemModel('name', 2, 'category', 1, 2,
+                          'assets/imgs/item2.png', 'description')),
                 ],
               ),
             ),
