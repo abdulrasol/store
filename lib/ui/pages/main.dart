@@ -14,11 +14,11 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  var _boNaBaIndex = 3;
+  var _boNaBaIndex = 0;
   var pages = [
     const Home(),
     const Categories(),
-    Cart(),
+    const Cart(),
     const More(),
   ];
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:store/ui/pages/category.dart';
 import 'package:store/ui/pages/main.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -15,16 +16,20 @@ void main() async {
 }
 
 var app = GetMaterialApp(
-  debugShowCheckedModeBanner: false,
-  theme: ThemeData(
-    appBarTheme: AppBarTheme(
-      systemOverlayStyle: SystemUiOverlayStyle.light,
-      backgroundColor: Colors.grey[50],
-      elevation: 0,
-      actionsIconTheme: const IconThemeData(
-        color: Colors.black87,
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      appBarTheme: AppBarTheme(
+        iconTheme: const IconThemeData(
+          color: Colors.black87,
+        ),
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        backgroundColor: Colors.grey[50],
+        elevation: 0,
+        actionsIconTheme: const IconThemeData(
+          color: Colors.black87,
+        ),
       ),
     ),
-  ),
-  home: const Main(),
-);
+    home: Main() // const CategoryPage(),
+    // initialRoute: '/',
+    );
