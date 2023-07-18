@@ -39,6 +39,8 @@ dependencies:
   get: ^4.6.5
   salomon_bottom_bar: ^3.3.2
   carousel_slider: ^4.2.1
+  firebase_core: ^2.14.0
+  cloud_firestore: ^4.8.2
 
 dev_dependencies:
   flutter_test:
