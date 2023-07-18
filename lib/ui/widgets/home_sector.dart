@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:store/database/models/item_model.dart';
 import 'package:store/ui/widgets/item_card.dart';
+import 'package:store/ui/widgets/product_card.dart';
 
 Widget homeSection(
   List items, {
@@ -27,9 +28,7 @@ Widget homeSection(
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return SizedBox(
-              width: 190,
-              // height: 190,
-              child: ItemCard(
+              child: ProductCart(
                 item: ItemModel('Item 1', 10, 'dd', 1, 1,
                     'assets/imgs/item2.png', 'description'),
               ),

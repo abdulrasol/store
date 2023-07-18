@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:store/ui/pages/profile.dart';
+import 'package:store/ui/pages/settings.dart';
 
 import 'orders.dart';
 
@@ -44,7 +47,7 @@ class More extends StatelessWidget {
           const SizedBox(height: 20),
           ListTile(
             onTap: () {
-              Get.to(const Orders());
+              Get.to(() => const Orders());
             },
             leading: const Icon(
               Icons.shopping_bag,
@@ -53,7 +56,9 @@ class More extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => const Prfile());
+            },
             leading: const Icon(
               CupertinoIcons.profile_circled,
             ),
@@ -61,7 +66,9 @@ class More extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => const Options());
+            },
             leading: const Icon(
               CupertinoIcons.settings,
             ),

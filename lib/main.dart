@@ -16,20 +16,20 @@ void main() async {
 }
 
 var app = GetMaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      appBarTheme: AppBarTheme(
-        iconTheme: const IconThemeData(
-          color: Colors.black87,
-        ),
-        systemOverlayStyle: SystemUiOverlayStyle.light,
-        backgroundColor: Colors.grey[50],
-        elevation: 0,
-        actionsIconTheme: const IconThemeData(
-          color: Colors.black87,
-        ),
+  debugShowCheckedModeBanner: false,
+  theme: ThemeData(
+    appBarTheme: AppBarTheme(
+      iconTheme: const IconThemeData(
+        color: Colors.black87,
+      ),
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+      backgroundColor: Colors.grey[50],
+      elevation: 0,
+      actionsIconTheme: const IconThemeData(
+        color: Colors.black87,
       ),
     ),
-    home: Main() // const CategoryPage(),
-    // initialRoute: '/',
-    );
+  ),
+  home: const Main(),
+  // initialRoute: '/',
+);

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:store/database/models/category_model.dart';
 import 'package:store/ui/widgets/category_card.dart';
+import 'package:store/ui/widgets/product_card.dart';
 
 import '../../database/models/item_model.dart';
 import '../widgets/generic_app_bar.dart';
@@ -33,7 +34,10 @@ class CategoryPage extends StatelessWidget {
                 runSpacing: 5,
                 spacing: 5,
                 children: [
-                  ItemCard(
+                  ProductCart(
+                      item: ItemModel('name', 2, 'category', 1, 2,
+                          'assets/imgs/item01.jpeg', 'description')),
+                  ProductCart(
                       item: ItemModel('name', 2, 'category', 1, 2,
                           'assets/imgs/item2.png', 'description')),
                 ],
