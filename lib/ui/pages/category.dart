@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:store/database/fetech/category.dart';
+import 'package:store/database/services/category.dart';
 import 'package:store/database/models/category_model.dart';
 import 'package:store/ui/widgets/product_card.dart';
 import '../../database/models/prodect_model.dart';

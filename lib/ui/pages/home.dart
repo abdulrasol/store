@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:store/database/fetech/general.dart';
+import 'package:store/database/services/general.dart';
 import 'package:store/database/models/slider_model.dart';
 import 'package:store/ui/widgets/carousel_widget.dart';
 import 'package:store/ui/widgets/catrgories_wrap.dart';
@@ -46,7 +46,13 @@ class _HomeState extends State<Home> {
                   if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
                   } else {
-                    return const Center(child: CircularProgressIndicator());
+                    return CarouselSlider(
+                      items: [carouselWidgetShimmer(), carouselWidgetShimmer()],
+                      options: CarouselOptions(
+                        height: MediaQuery.of(context).size.height / 4,
+                        autoPlay: true,
+                      ),
+                    );
                   }
                 },
               ),
