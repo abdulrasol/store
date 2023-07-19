@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:store/database/models/item_model.dart';
+import 'package:store/database/fetech/items.dart';
+import 'package:store/database/models/prodect_model.dart';
 import 'package:store/ui/widgets/product_card.dart';
 
 Widget homeSection(
@@ -22,18 +24,47 @@ Widget homeSection(
       SizedBox(
         height: 200,
         width: double.infinity,
-        child: ListView.builder(
-          itemCount: 5,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return SizedBox(
-              child: ProductCart(
-                item: ItemModel('Item 1', 10, 'dd', 1, 1,
-                    'assets/imgs/item2.png', 'description'),
-              ),
-            );
-          },
-        ),
+        // futurebuilder that get products from cloud by items fetchs
+        child: FutureBuilder<QuerySnapshot>(
+            future: getProducts(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<ProdectModel> products = snapshot.data!.docs.map((doc) {
+                  return ProdectModel.fromMap(
+                      doc.data() as Map<String, dynamic>);
+                }).toList();
+
+                return ListView.builder(
+                  itemCount: 5,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    ProdectModel product = products[index];
+                    return SizedBox(
+                      child: ProductCart(
+                        product: ProdectModel(
+                          id: product.id,
+                          name: product.name,
+                          price: product.price,
+                          category: product.category,
+                          sellUnit: product.sellUnit,
+                          quantity: product.quantity,
+                          image: product.image,
+                          note: product.note,
+                          increaseAmount: product.increaseAmount,
+                          availability: product.availability,
+                          priority: product.priority,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            }),
       ),
     ],
   );

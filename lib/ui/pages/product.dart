@@ -1,16 +1,20 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:store/database/models/prodect_model.dart';
 import '../widgets/generic_app_bar.dart';
 
 class ItemPage extends StatelessWidget {
-  const ItemPage({super.key});
+  final ProdectModel product;
+
+  const ItemPage({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    double quantity = product.increaseAmount;
     return Scaffold(
       appBar: genericAppBar(
-        title: 'My Orders',
+        title: product.name,
         withBackAction: true,
         showSearchIcon: false,
         centerTitle: true,
@@ -29,15 +33,15 @@ class ItemPage extends StatelessWidget {
                     children: [
                       SizedBox(
                           height: MediaQuery.of(context).size.height / 3,
-                          child: Image.asset(
-                              'assets/imgs/item2.png') //Image.network(item.image),
+                          child: Image.memory(base64.decode(
+                              product.image)) //Image.network(item.image),
                           ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Item Title",
-                            style: TextStyle(
+                          Text(
+                            product.name,
+                            style: const TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
                             ),
@@ -46,16 +50,15 @@ class ItemPage extends StatelessWidget {
                           Text.rich(
                             TextSpan(
                               children: [
-                                const TextSpan(
-                                  text: '45\$', //'${item.price}\$',
-                                  style: TextStyle(
+                                TextSpan(
+                                  text: '${product.price}\$',
+                                  style: const TextStyle(
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 TextSpan(
-                                  text:
-                                      'per one kilo}', //'per ${item.sellUnit}',
+                                  text: 'per ${product.sellUnit}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -68,10 +71,9 @@ class ItemPage extends StatelessWidget {
                           sizedBox,
                           //UpdateCount(item: item, quantity: quantity),
                           sizedBox,
-                          const Text(
-                            'لا الخدع أسبرناتور طريق وذلك. هو شيء قال أو نقود. لذلك سهل مدمر الأكثر الحمدون أبداً. أقل شخص يهرب المرونة آتي سهل عقل المحدد خطأ آتي. فليكن أسبرناتور قيمة اللطف آلام يهرب لو شئ مرات بالفعل.',
-                            //item.note,
-                            style: TextStyle(
+                          Text(
+                            product.note,
+                            style: const TextStyle(
                               fontSize: 18,
                             ),
                           ),
@@ -95,16 +97,16 @@ class ItemPage extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      const Text.rich(
+                      Text.rich(
                         TextSpan(
                           children: [
-                            TextSpan(text: 'Total Price '),
-                            TextSpan(text: '34'
-                                // '${(item.price * quantity).toStringAsFixed(2)}\$')
-                                )
+                            const TextSpan(text: 'Total Price '),
+                            TextSpan(
+                                text:
+                                    '${(product.price * quantity).toStringAsFixed(2)}\$')
                           ],
                         ),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

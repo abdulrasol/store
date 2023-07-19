@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-Card carouselWidget(
-    {String banner = 'assets/imgs/banner2.png',
-    String headline = '',
-    String bodytext = ''}) {
+import 'package:flutter/material.dart';
+import 'package:store/database/models/slider_model.dart';
+
+Card carouselWidget(SildeModel slide) {
   return Card(
     shape: Border.all(),
     shadowColor: Colors.black12,
@@ -18,8 +18,8 @@ Card carouselWidget(
           left: 0,
           right: 0,
           bottom: 0,
-          child: Image.asset(
-            banner,
+          child: Image.memory(
+            base64Decode(slide.image),
             fit: BoxFit.cover,
           ),
         ),
@@ -27,7 +27,7 @@ Card carouselWidget(
           bottom: 25,
           left: 10,
           child: Text(
-            headline,
+            slide.title,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white70,
@@ -38,7 +38,7 @@ Card carouselWidget(
           bottom: 10,
           left: 10,
           child: Text(
-            bodytext,
+            slide.text,
             style: const TextStyle(
               fontWeight: FontWeight.normal,
               color: Colors.white70,

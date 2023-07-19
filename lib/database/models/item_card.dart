@@ -1,7 +1,7 @@
-import 'package:store/database/models/item_model.dart';
+import 'package:store/database/models/prodect_model.dart';
 
 class CartItem {
-  final ItemModel item;
+  final ProdectModel item;
   double quantity;
   late double price;
 
@@ -9,12 +9,12 @@ class CartItem {
     price = item.price * quantity;
   }
   void increaseQuantity() {
-    quantity = quantity + item.unit;
+    quantity = quantity + item.increaseAmount;
     price = item.price * quantity;
   }
 
   void decreaseQuantity() {
-    quantity = quantity - item.unit;
+    quantity = quantity - item.increaseAmount;
     price = item.price * quantity;
   }
 }

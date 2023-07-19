@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:store/database/models/category_model.dart';
@@ -18,7 +20,9 @@ class CategoryCard extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
-          Get.to(() => const CategoryPage());
+          Get.to(() => CategoryPage(
+                category: category,
+              ));
         },
         child: SizedBox(
           height: 150,
@@ -29,8 +33,8 @@ class CategoryCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Center(
-                  child: Image.asset(
-                    category.image,
+                  child: Image.memory(
+                    base64.decode(category.image),
                     fit: BoxFit.cover,
                   ),
                 ),

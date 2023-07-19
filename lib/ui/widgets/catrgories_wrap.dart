@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:store/database/fetech/category.dart';
 import '../../database/models/category_model.dart';
 import 'category_card.dart';
 
@@ -21,41 +22,34 @@ Column categoriesWrap({bool withTitle = true}) {
       SizedBox(
         width: double.infinity,
         child: Center(
-          child: Wrap(
-            direction: Axis.horizontal,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            runAlignment: WrapAlignment.start,
-            alignment: WrapAlignment.start,
-            verticalDirection: VerticalDirection.down,
-            runSpacing: 5,
-            spacing: 5,
-            children: [
-              CategoryCard(
-                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
-              ),
-              CategoryCard(
-                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
-              ),
-              CategoryCard(
-                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
-              ),
-              CategoryCard(
-                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
-              ),
-              CategoryCard(
-                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
-              ),
-              CategoryCard(
-                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
-              ),
-              CategoryCard(
-                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
-              ),
-              CategoryCard(
-                category: CategoryModel('Cat 01', 'assets/imgs/cat01.png', ''),
-              ),
-            ],
-          ),
+          child: FutureBuilder<QuerySnapshot>(
+              future: getCategories(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<CategoryModel> categories =
+                      snapshot.data!.docs.map((doc) {
+                    return CategoryModel.fromMap(
+                        doc.data() as Map<String, dynamic>);
+                  }).toList();
+                  return Wrap(
+                    direction: Axis.horizontal,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    runAlignment: WrapAlignment.start,
+                    alignment: WrapAlignment.start,
+                    verticalDirection: VerticalDirection.down,
+                    runSpacing: 5,
+                    spacing: 5,
+                    children: categories
+                        .map((category) => CategoryCard(category: category))
+                        .toList(),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              }),
         ),
       ),
     ],

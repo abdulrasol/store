@@ -1,12 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:store/database/models/item_model.dart';
-import 'package:store/ui/pages/item.dart';
+import 'package:store/database/models/prodect_model.dart';
+import 'package:store/ui/pages/product.dart';
 
 class ProductCart extends StatelessWidget {
-  final ItemModel item;
-  const ProductCart({super.key, required this.item});
+  final ProdectModel product;
+  const ProductCart({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +19,13 @@ class ProductCart extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
-          Get.to(() => const ItemPage());
+          Get.to(() => ItemPage(product: product));
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SizedBox(
             width: 120,
+            height: 190,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,8 +33,8 @@ class ProductCart extends StatelessWidget {
                 SizedBox(
                   height: 120,
                   child: Center(
-                    child: Image.asset(
-                      item.image,
+                    child: Image.memory(
+                      base64.decode(product.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -45,7 +47,7 @@ class ProductCart extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${item.price}\$",
+                          "${product.price}\$",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -53,7 +55,7 @@ class ProductCart extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          item.name,
+                          product.name,
                           style: const TextStyle(fontWeight: FontWeight.w600),
                         )
                       ],
@@ -66,11 +68,11 @@ class ProductCart extends StatelessWidget {
                             MaterialStateProperty.all(Colors.white),
                         elevation: MaterialStateProperty.all(2),
                         minimumSize:
-                            MaterialStateProperty.all(const Size(40, 40)),
+                            MaterialStateProperty.all(const Size(35, 35)),
                         maximumSize:
-                            MaterialStateProperty.all(const Size(40, 40)),
+                            MaterialStateProperty.all(const Size(35, 35)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0))),
+                            borderRadius: BorderRadius.circular(10.0))),
                       ),
                       onPressed: () {},
                       child: const Center(child: Icon(CupertinoIcons.plus)),

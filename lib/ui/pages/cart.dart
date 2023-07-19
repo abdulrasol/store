@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store/database/models/item_card.dart';
-import 'package:store/database/models/item_model.dart';
+import 'package:store/database/models/prodect_model.dart';
 import 'package:store/ui/widgets/cart_item_widget.dart';
 import 'package:store/ui/widgets/page_title.dart';
 
@@ -15,8 +15,19 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final CartItem item = CartItem(
-    ItemModel(
-        'Item 1', 1.99, 'dd', 1, 1, 'assets/imgs/item2.png', 'description'),
+    ProdectModel(
+      id: 'id',
+      name: 'name',
+      price: 12,
+      category: 'category',
+      sellUnit: 'sellUnit',
+      quantity: 1,
+      image: 'assets/imgs/item2.png',
+      note: 'description',
+      increaseAmount: 1,
+      availability: true,
+      priority: 1,
+    ),
     2,
   );
 

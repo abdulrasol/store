@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:store/database/models/item_model.dart';
-import 'package:store/ui/pages/item.dart';
+import 'package:store/database/models/prodect_model.dart';
+import 'package:store/ui/pages/product.dart';
 
 import 'generic_app_bar.dart';
 
 class ItemCard extends StatelessWidget {
-  final ItemModel item;
+  final ProdectModel product;
   const ItemCard({
-    required this.item,
+    required this.product,
     Key? key,
   }) : super(key: key);
 
@@ -27,7 +27,7 @@ class ItemCard extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
-          Get.to(() => const ItemPage());
+          Get.to(() => ItemPage(product: product));
         },
         child: SizedBox(
           // height: 260,
@@ -43,19 +43,19 @@ class ItemCard extends StatelessWidget {
                   child: SizedBox(
                     width: 100,
                     child: Image.asset(
-                      item.image,
+                      product.image,
                       fit: BoxFit.cover,
                     ), // Image.network(item.image), //Image.memory(base64Decode(item.image)),
                   ),
                 ),
                 sizedBox,
                 Text(
-                  item.name,
+                  product.name,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  '\$${item.price}/${item.unit}',
+                  '\$${product.price}/${product.sellUnit}',
                   style: const TextStyle(color: Colors.black38),
                 ),
                 sizedBox,
@@ -63,7 +63,7 @@ class ItemCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '\$${item.price.toString()}',
+                      '\$${product.price.toString()}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
