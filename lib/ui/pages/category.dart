@@ -1,12 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:store/database/models/category_model.dart';
-import 'package:store/ui/widgets/category_card.dart';
 import 'package:store/ui/widgets/product_card.dart';
-
 import '../../database/models/item_model.dart';
 import '../widgets/generic_app_bar.dart';
-import '../widgets/item_card.dart';
 
 class CategoryPage extends StatelessWidget {
   const CategoryPage({super.key});

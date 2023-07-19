@@ -13,7 +13,7 @@ class Prfile extends StatelessWidget {
           centerTitle: true,
           showSearchIcon: false,
         ),
-        body: Placeholder(
+        body: const Placeholder(
           color: Colors.cyanAccent,
         ));
   }

@@ -35,9 +35,9 @@ class ItemPage extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Item Title",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
                             ),
@@ -46,9 +46,9 @@ class ItemPage extends StatelessWidget {
                           Text.rich(
                             TextSpan(
                               children: [
-                                TextSpan(
+                                const TextSpan(
                                   text: '45\$', //'${item.price}\$',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -68,10 +68,10 @@ class ItemPage extends StatelessWidget {
                           sizedBox,
                           //UpdateCount(item: item, quantity: quantity),
                           sizedBox,
-                          Text(
+                          const Text(
                             'لا الخدع أسبرناتور طريق وذلك. هو شيء قال أو نقود. لذلك سهل مدمر الأكثر الحمدون أبداً. أقل شخص يهرب المرونة آتي سهل عقل المحدد خطأ آتي. فليكن أسبرناتور قيمة اللطف آلام يهرب لو شئ مرات بالفعل.',
                             //item.note,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                             ),
                           ),
@@ -95,16 +95,16 @@ class ItemPage extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      Text.rich(
+                      const Text.rich(
                         TextSpan(
                           children: [
-                            const TextSpan(text: 'Total Price '),
+                            TextSpan(text: 'Total Price '),
                             TextSpan(text: '34'
                                 // '${(item.price * quantity).toStringAsFixed(2)}\$')
                                 )
                           ],
                         ),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

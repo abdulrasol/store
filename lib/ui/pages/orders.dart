@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
 
 class Orders extends StatelessWidget {
@@ -15,7 +13,7 @@ class Orders extends StatelessWidget {
           centerTitle: true,
           showSearchIcon: false,
         ),
-        body: Placeholder(
+        body: const Placeholder(
           color: Colors.cyanAccent,
         ));
   }

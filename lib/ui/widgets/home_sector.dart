@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:store/database/models/item_model.dart';
-import 'package:store/ui/widgets/item_card.dart';
 import 'package:store/ui/widgets/product_card.dart';
 
 Widget homeSection(
