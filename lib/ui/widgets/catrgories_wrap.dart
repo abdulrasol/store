@@ -47,7 +47,15 @@ Column categoriesWrap({bool withTitle = true}) {
                 if (snapshot.hasError) {
                   return Text(snapshot.error.toString());
                 } else {
-                  return const Center(child: CircularProgressIndicator());
+                  return Wrap(
+                    children: [
+                      categoryCartShimmer(),
+                      categoryCartShimmer(),
+                      categoryCartShimmer(),
+                      categoryCartShimmer(),
+                      categoryCartShimmer(),
+                    ],
+                  );
                 }
               }),
         ),

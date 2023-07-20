@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:store/database/models/category_model.dart';
 
 import '../pages/category.dart';
@@ -53,4 +53,39 @@ class CategoryCard extends StatelessWidget {
       ),
     );
   }
+}
+
+// shimmer
+Widget categoryCartShimmer() {
+  return Card(
+    child: SizedBox(
+      height: 150,
+      width: 120,
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[200]!,
+        highlightColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Expanded(
+                child: Center(child: Icon(Icons.category)),
+              ),
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5, 8, 8, 6),
+                child: Container(
+                  color: Colors.grey[200],
+                  height: 10,
+                  width: 70,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }

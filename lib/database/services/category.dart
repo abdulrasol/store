@@ -1,6 +1,6 @@
 // Import the FirebaseFirestore plugin.
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:store/database/fetech/items.dart';
+import 'package:store/database/services/items.dart';
 
 // Create a reference to the products collection.
 CollectionReference categoriesCollection =

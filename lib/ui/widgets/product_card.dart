@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:store/database/models/prodect_model.dart';
 import 'package:store/ui/pages/product.dart';
 
@@ -86,4 +87,62 @@ class ProductCart extends StatelessWidget {
       ),
     );
   }
+}
+
+// shimor
+Widget productCartShimmer() {
+  return Card(
+    child: SizedBox(
+      width: 146,
+      height: 190,
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[200]!,
+        highlightColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 134,
+                height: 120,
+                child: CircleAvatar(
+                  radius: double.infinity,
+                  backgroundColor: Colors.grey[200],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        color: Colors.grey[200],
+                        height: 10,
+                        width: 40,
+                      ),
+                      const SizedBox(height: 5),
+                      Container(
+                        color: Colors.grey[200],
+                        height: 10,
+                        width: 70,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    color: Colors.grey[200],
+                    height: 40,
+                    width: 40,
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }

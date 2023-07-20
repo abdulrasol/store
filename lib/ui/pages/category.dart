@@ -49,7 +49,24 @@ class CategoryPage extends StatelessWidget {
                     if (snapshot.hasError) {
                       return Text(snapshot.error.toString());
                     } else {
-                      return const Center(child: CircularProgressIndicator());
+                      return Wrap(
+                        direction: Axis.horizontal,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        runAlignment: WrapAlignment.start,
+                        alignment: WrapAlignment.start,
+                        verticalDirection: VerticalDirection.down,
+                        runSpacing: 5,
+                        spacing: 5,
+                        children: [
+                          productCartShimmer(),
+                          productCartShimmer(),
+                          productCartShimmer(),
+                          productCartShimmer(),
+                          productCartShimmer(),
+                          productCartShimmer(),
+                          productCartShimmer(),
+                        ],
+                      );
                     }
                   }),
             ),

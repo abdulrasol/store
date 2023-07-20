@@ -5,7 +5,9 @@ import 'package:store/database/models/slider_model.dart';
 
 Card carouselWidget(SildeModel slide) {
   return Card(
-    shape: Border.all(),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(100)),
+    ),
     shadowColor: Colors.black12,
     elevation: 0.1,
     margin: const EdgeInsets.all(2.0),
@@ -50,58 +52,22 @@ Card carouselWidget(SildeModel slide) {
   );
 }
 
-Card carouselWidgetShimmer() {
-  return Card(
-    shape: Border.all(),
-    shadowColor: Colors.black12,
-    elevation: 0.1,
-    margin: const EdgeInsets.all(2.0),
-    child: Stack(
-      fit: StackFit.expand,
-      children: [
-        Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Shimmer.fromColors(
-              baseColor: Colors.grey[200]!,
-              highlightColor: Colors.white,
-              child: Container(
-                color: Colors.grey[200],
-              ),
-            )),
-        Positioned(
-          bottom: 30,
-          left: 10,
-          child: Shimmer.fromColors(
-            baseColor: Colors.grey[200]!,
-            highlightColor: Colors.white,
-            child: Container(
-              color: Color.fromARGB(255, 155, 154, 154),
-              width: 200,
-              height: 16,
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 10,
-          left: 10,
-          child: Shimmer.fromColors(
-            baseColor: Colors.grey[200]!,
-            highlightColor: Colors.white,
-            child: Container(
-              color: Colors.grey[100],
-              width: 300,
-              height: 16,
-            ),
-          ),
-        ),
-      ],
+Widget carouselWidgetShimmer() {
+  return Shimmer.fromColors(
+    baseColor: Colors.grey[200]!,
+    highlightColor: Colors.white,
+    child: const SizedBox(
+      width: double.infinity,
+      child: Card(
+        margin: EdgeInsets.all(5),
+        child: SizedBox(),
+      ),
     ),
   );
 }
-/*
+  
+  /*
+
 SizedBox(
   width: 200.0,
   height: 100.0,

@@ -62,7 +62,15 @@ Widget homeSection(
               if (snapshot.hasError) {
                 return Text(snapshot.error.toString());
               } else {
-                return const Center(child: CircularProgressIndicator());
+                return ListView.builder(
+                  itemCount: 5,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return SizedBox(
+                      child: productCartShimmer(),
+                    );
+                  },
+                );
               }
             }),
       ),
