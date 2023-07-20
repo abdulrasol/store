@@ -12,6 +12,7 @@ class Orders extends StatelessWidget {
           withBackAction: true,
           centerTitle: true,
           showSearchIcon: false,
+          context: context,
         ),
         body: const Placeholder(
           color: Colors.cyanAccent,

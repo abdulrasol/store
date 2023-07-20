@@ -14,3 +14,12 @@ Future<QuerySnapshot> getProducts() async {
 Future<DocumentSnapshot> getProductById(String id) async {
   return await productsCollection.doc(id).get();
 }
+
+// Get Product that from search
+Future<QuerySnapshot> getFilterdProducts(String text) async {
+  Query query = productsCollection.where('name', arrayContains: text);
+  QuerySnapshot querySnapshot = await query.get();
+  return querySnapshot;
+}
+// 07803281628
+// 07719921810

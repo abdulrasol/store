@@ -19,7 +19,10 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: genericAppBar(title: 'AppStore'),
+      appBar: genericAppBar(
+        title: 'AppStore',
+        context: context,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 3),

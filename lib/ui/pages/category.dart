@@ -18,6 +18,7 @@ class CategoryPage extends StatelessWidget {
         withBackAction: true,
         showSearchIcon: true,
         centerTitle: true,
+        context: context,
       ),
       body: Column(
         children: [

@@ -18,6 +18,7 @@ class ItemPage extends StatelessWidget {
         withBackAction: true,
         showSearchIcon: false,
         centerTitle: true,
+        context: context,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),

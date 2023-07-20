@@ -9,7 +9,7 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: genericAppBar(),
+        appBar: genericAppBar(context: context),
         body: SingleChildScrollView(
           child: Column(
             children: [

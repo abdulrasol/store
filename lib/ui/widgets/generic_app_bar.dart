@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:store/ui/widgets/search.dart';
 
 AppBar genericAppBar({
   String title = '',
   bool withBackAction = false,
   bool centerTitle = false,
   bool showSearchIcon = true,
+  required BuildContext context,
 }) {
   return AppBar(
     title: Text(
@@ -17,7 +19,9 @@ AppBar genericAppBar({
     actions: [
       showSearchIcon
           ? IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showSearch(context: context, delegate: Search());
+              },
               icon: const Icon(CupertinoIcons.search),
             )
           : const SizedBox()
