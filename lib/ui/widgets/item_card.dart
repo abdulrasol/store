@@ -27,7 +27,7 @@ class ItemCard extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
-          Get.to(() => ItemPage(product: product));
+          Get.to(() => ProductPage(product: product));
         },
         child: SizedBox(
           // height: 260,

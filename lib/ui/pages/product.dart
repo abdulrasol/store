@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:store/database/models/prodect_model.dart';
 import '../widgets/generic_app_bar.dart';
 
-class ItemPage extends StatelessWidget {
+class ProductPage extends StatelessWidget {
   final ProdectModel product;
 
-  const ItemPage({super.key, required this.product});
+  const ProductPage({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,9 @@
-class SildeModel {
+class SlideModel {
   final String title;
   final String image;
   final String text;
 
-  SildeModel({required this.title, required this.image, required this.text});
+  SlideModel({required this.title, required this.image, required this.text});
 
   Map<String, String> toMap() {
     return {
@@ -13,8 +13,8 @@ class SildeModel {
     };
   }
 
-  static SildeModel fromMap(Map<String, dynamic> map) {
-    return SildeModel(
+  static SlideModel fromMap(Map<String, dynamic> map) {
+    return SlideModel(
         title: map['title'], image: map['image'], text: map['text']);
   }
 }

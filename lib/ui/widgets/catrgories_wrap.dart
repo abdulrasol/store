@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:store/database/services/category.dart';
-import '../../database/models/category_model.dart';
+import 'package:get/get.dart';
+import 'package:store/database/services/controller.dart';
 import 'category_card.dart';
 
 Column categoriesWrap({bool withTitle = true}) {
+  final Controller controller = Get.put(Controller());
   return Column(
     children: [
       withTitle
@@ -22,42 +22,31 @@ Column categoriesWrap({bool withTitle = true}) {
       SizedBox(
         width: double.infinity,
         child: Center(
-          child: FutureBuilder<QuerySnapshot>(
-              future: getCategories(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List<CategoryModel> categories =
-                      snapshot.data!.docs.map((doc) {
-                    return CategoryModel.fromMap(
-                        doc.data() as Map<String, dynamic>);
-                  }).toList();
-                  return Wrap(
-                    direction: Axis.horizontal,
-                    crossAxisAlignment: WrapCrossAlignment.start,
-                    runAlignment: WrapAlignment.start,
-                    alignment: WrapAlignment.start,
-                    verticalDirection: VerticalDirection.down,
-                    runSpacing: 5,
-                    spacing: 5,
-                    children: categories
-                        .map((category) => CategoryCard(category: category))
-                        .toList(),
-                  );
-                }
-                if (snapshot.hasError) {
-                  return Text(snapshot.error.toString());
-                } else {
-                  return Wrap(
-                    children: [
-                      categoryCartShimmer(),
-                      categoryCartShimmer(),
-                      categoryCartShimmer(),
-                      categoryCartShimmer(),
-                      categoryCartShimmer(),
-                    ],
-                  );
-                }
-              }),
+          child: Obx(() {
+            if (controller.categories.isNotEmpty) {
+              return Wrap(
+                  direction: Axis.horizontal,
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  runAlignment: WrapAlignment.start,
+                  alignment: WrapAlignment.start,
+                  verticalDirection: VerticalDirection.down,
+                  runSpacing: 5,
+                  spacing: 5,
+                  children: controller.categories
+                      .map((element) => CategoryCard(category: element))
+                      .toList());
+            } else {
+              return Wrap(
+                children: [
+                  categoryCartShimmer(),
+                  categoryCartShimmer(),
+                  categoryCartShimmer(),
+                  categoryCartShimmer(),
+                  categoryCartShimmer(),
+                ],
+              );
+            }
+          }),
         ),
       ),
     ],

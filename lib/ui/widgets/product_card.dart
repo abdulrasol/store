@@ -20,7 +20,7 @@ class ProductCart extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
-          Get.to(() => ItemPage(product: product));
+          Get.to(() => ProductPage(product: product));
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),

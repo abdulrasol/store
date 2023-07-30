@@ -3,7 +3,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:store/database/models/slider_model.dart';
 
-Card carouselWidget(SildeModel slide) {
+Card carouselWidget(SlideModel slide) {
   return Card(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(100)),
