@@ -4,14 +4,14 @@ import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class AuthPage extends StatefulWidget {
+  const AuthPage({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<AuthPage> createState() => _AuthPageState();
 }
 
-class _LoginState extends State<Login> {
+class _AuthPageState extends State<AuthPage> {
   final GlobalKey<FormState> _fromKey = GlobalKey<FormState>();
 
   final RoundedLoadingButtonController btnController =
