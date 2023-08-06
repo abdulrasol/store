@@ -10,6 +10,7 @@ class Controller extends GetxController {
   RxList<ProdectModel> products = <ProdectModel>[].obs;
   RxList<CategoryModel> categories = <CategoryModel>[].obs;
   RxList<SlideModel> sliders = <SlideModel>[].obs;
+  RxDouble totalPrice = 1.0.obs;
 
   @override
   void onInit() async {

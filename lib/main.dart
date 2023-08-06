@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:store/database/models/prodect_model.dart';
 import 'package:store/ui/pages/main.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:store/ui/pages/product.dart';
 import 'firebase_options.dart';
 
 void main() async {

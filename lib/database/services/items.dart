@@ -31,13 +31,13 @@ Future<List<ProdectModel>> getProductsList() async {
 
 // Get all products as stream ignored
 Stream<QuerySnapshot> getProductsAsStream() {
-  var products = productsCollection.snapshots();
+  // var products = productsCollection.snapshots();
 
   return productsCollection.snapshots();
 }
 
-final Stream<QuerySnapshot> _usersStream =
-    FirebaseFirestore.instance.collection('users').snapshots();
+//final Stream<QuerySnapshot> _usersStream =
+//    FirebaseFirestore.instance.collection('users').snapshots();
 
 // Get a single product by ID.
 Future<DocumentSnapshot> getProductById(String id) async {
