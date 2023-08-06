@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:store/database/models/prodect_model.dart';
 import 'package:store/ui/widgets/rating_bottm.dart';
+import 'package:store/ui/widgets/small_widget.dart';
+import '../../database/services/controller.dart';
 import '../widgets/generic_app_bar.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -16,9 +19,8 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double quantity = product.increaseAmount;
-    double totalPrice = product.price * quantity;
     const sizedBox = SizedBox(height: 10);
-
+    final controller = Get.put(Controller());
     void updateQuantityValueFromClass(double newQuantity) {
       quantity = newQuantity;
     }
@@ -248,20 +250,18 @@ class ProductPage extends StatelessWidget {
                         controller: btnController,
                         color: Colors.black87,
                         onPressed: () async {
-                          totalPrice = quantity * product.price;
-                          await Future.delayed(const Duration(seconds: 2))
-                              .then((value) {
-                            print(quantity);
-
-                            print(totalPrice);
-                          });
-                          btnController.success();
-                          await Future.delayed(const Duration(seconds: 2))
-                              .then((value) {
-                            print(quantity);
-                            print(totalPrice);
-                          });
-                          btnController.reset();
+                          // to check if user was loging in before or not!
+                          if (controller.user.value == null) {
+                            logingCheckingSnakBar;
+                            btnController.reset();
+                          } else {
+                            await Future.delayed(const Duration(seconds: 2))
+                                .then((value) {});
+                            btnController.success();
+                            await Future.delayed(const Duration(seconds: 2))
+                                .then((value) {});
+                            btnController.reset();
+                          }
                         },
                         child: const Text('add to cart'))
                   ],

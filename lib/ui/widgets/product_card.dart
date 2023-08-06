@@ -6,12 +6,16 @@ import 'package:shimmer/shimmer.dart';
 import 'package:store/database/models/prodect_model.dart';
 import 'package:store/ui/pages/product.dart';
 
+import '../../database/services/controller.dart';
+import 'small_widget.dart';
+
 class ProductCart extends StatelessWidget {
   final ProdectModel product;
   const ProductCart({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(Controller());
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5.0),
@@ -75,7 +79,11 @@ class ProductCart extends StatelessWidget {
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0))),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (controller.user.value == null) {
+                          logingCheckingSnakBar;
+                        }
+                      },
                       child: const Center(child: Icon(CupertinoIcons.plus)),
                     ),
                   ],

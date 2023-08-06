@@ -10,14 +10,14 @@ class PrintRatingController extends RatingController {
 
   @override
   Future<void> ignoreForEverCallback() async {
-    print('Rating ignored forever!');
+    //print('Rating ignored forever!');
     await Future.delayed(const Duration(seconds: 3));
   }
 
   @override
   Future<void> saveRatingCallback(
       int rate, List<RatingCriterionModel> selectedCriterions) async {
-    print('Rating saved!\nRate: $rate\nsSelectedItems: $selectedCriterions');
+    //print('Rating saved!\nRate: $rate\nsSelectedItems: $selectedCriterions');
     await Future.delayed(const Duration(seconds: 3));
   }
 }
