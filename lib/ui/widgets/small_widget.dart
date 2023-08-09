@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:store/ui/pages/signup.dart';
+import 'package:store/ui/pages/auth_page.dart';
 
 void checkLoginandShowSnakBar() {}
 var logingCheckingSnakBar = Get.showSnackbar(

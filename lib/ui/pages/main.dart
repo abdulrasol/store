@@ -19,7 +19,7 @@ class _MainState extends State<Main> {
     const Home(),
     const Categories(),
     const Cart(),
-    const More(),
+    More(),
   ];
 
   @override
@@ -43,10 +43,11 @@ class _MainState extends State<Main> {
               unselectedColor: Colors.black54,
               selectedColor: Colors.black87),
           SalomonBottomBarItem(
-              icon: const Icon(CupertinoIcons.cart),
-              title: const Text('Cart'),
-              unselectedColor: Colors.black54,
-              selectedColor: Colors.black87),
+            icon: const Icon(CupertinoIcons.cart),
+            title: const Text('Cart'),
+            unselectedColor: Colors.black54,
+            selectedColor: Colors.black87,
+          ),
           SalomonBottomBarItem(
               icon: const Icon(CupertinoIcons.settings),
               title: const Text('More'),

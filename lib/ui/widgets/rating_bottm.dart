@@ -91,7 +91,7 @@ Widget ratingBottomSheet(String product) {
               await Future.delayed(const Duration(seconds: 3));
               btnController.success();
               await Future.delayed(const Duration(seconds: 3));
-              print(textEditController.text);
+
               Get.back();
             },
             child: const Text('submet'))
