@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:store/database/models/item_card.dart';
 import 'package:store/database/models/prodect_model.dart';
+import 'package:store/database/services/items.dart';
 import 'package:store/ui/widgets/rating_bottm.dart';
 import 'package:store/ui/widgets/small_widget.dart';
 import '../../database/services/controller.dart';
@@ -123,7 +125,7 @@ class ProductPage extends StatelessWidget {
                         //sizedBox,
                         sectionTitle('Product descrption'),
                         Text(
-                          product.note,
+                          product.description,
                           style: const TextStyle(
                             fontSize: 18,
                           ),
@@ -255,12 +257,13 @@ class ProductPage extends StatelessWidget {
                             logingCheckingSnakBar;
                             btnController.reset();
                           } else {
-                            await Future.delayed(const Duration(seconds: 2))
-                                .then((value) {});
-                            btnController.success();
-                            await Future.delayed(const Duration(seconds: 2))
-                                .then((value) {});
-                            btnController.reset();
+                            var adding = await addCartToCart(CartItemModel(
+                                item: product, quantity: quantity));
+                            if (adding == null) {
+                              btnController.success();
+                            } else {
+                              btnController.error();
+                            }
                           }
                         },
                         child: const Text('add to cart'))

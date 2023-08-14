@@ -1,8 +1,13 @@
 // Import the FirebaseFirestore plugin.
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:store/database/models/item_card.dart';
+import 'package:store/database/services/controller.dart';
 
 import '../models/prodect_model.dart';
 
+final controller = Get.put(Controller());
 // Create a reference to the products collection.
 CollectionReference productsCollection =
     FirebaseFirestore.instance.collection('items');
@@ -13,15 +18,6 @@ Future<QuerySnapshot> getProducts() async {
 }
 
 // Get all the products from the collection.
-/*
-Future<List<ProdectModel>> getProductsList() async {
-  return await productsCollection
-      .get()
-      .then((products) => products.docs.map((e) {
-            return ProdectModel.fromMap(e.data() as Map<String, dynamic>);
-          }).toList());
-}
-*/
 Future<List<ProdectModel>> getProductsList() async {
   final products = await productsCollection.get();
   return products.docs.map((e) {
@@ -31,8 +27,6 @@ Future<List<ProdectModel>> getProductsList() async {
 
 // Get all products as stream ignored
 Stream<QuerySnapshot> getProductsAsStream() {
-  // var products = productsCollection.snapshots();
-
   return productsCollection.snapshots();
 }
 
@@ -53,5 +47,50 @@ Future<QuerySnapshot> getFilterdProducts(String text) async {
   QuerySnapshot querySnapshot = await query.get();
   return querySnapshot;
 }
-// 07803281628
-// 07719921810
+
+// add item to user cart
+Future<String?> addCartToCart(CartItemModel item) async {
+  if (FirebaseAuth.instance.currentUser != null) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('cart')
+        .add(item.toMap());
+    return null;
+  } else {
+    return 'Please login first!';
+  }
+}
+
+// get cart items
+Future<List<CartItemModel>> getCartItems() async {
+  final items = await FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('cart')
+      .get();
+
+  return items.docs.map((e) {
+    final item = e.data()['item'];
+    //final price = e.data()['price'];
+    final quantity = e.data()['quantity'];
+
+    return CartItemModel(item: ProdectModel.fromMap(item), quantity: quantity);
+  }).toList();
+}
+
+// delete cart items
+
+Future<String?> deleteCartItem(String id) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('cart')
+        .doc(id)
+        .delete();
+    return null;
+  } on Exception catch (e) {
+    return 'Error';
+  }
+}

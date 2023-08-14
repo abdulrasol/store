@@ -192,7 +192,12 @@ class _AuthPageState extends State<AuthPage> {
                 if (login != null) {
                   setState(() {
                     state = login;
+                    btnController.error();
                   });
+                } else {
+                  btnController.success();
+                  Future.delayed(const Duration(milliseconds: 500));
+                  Get.back();
                 }
               } else {
                 btnController.error();
@@ -446,6 +451,8 @@ class _AuthPageState extends State<AuthPage> {
                     state = login;
                     btnController.reset();
                   });
+                } else {
+                  Get.back();
                 }
               } else {
                 btnController.error();

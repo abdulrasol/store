@@ -6,7 +6,9 @@ import 'package:shimmer/shimmer.dart';
 import 'package:store/database/models/prodect_model.dart';
 import 'package:store/ui/pages/product.dart';
 
+import '../../database/models/item_card.dart';
 import '../../database/services/controller.dart';
+import '../../database/services/items.dart';
 import 'small_widget.dart';
 
 class ProductCart extends StatelessWidget {
@@ -79,9 +81,25 @@ class ProductCart extends StatelessWidget {
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0))),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (controller.user.value == null) {
                           logingCheckingSnakBar;
+                        }
+                        var adding = await addCartToCart(CartItemModel(
+                            item: product, quantity: product.increaseAmount));
+                        if (adding == null) {
+                          Get.snackbar(
+                              'success', 'product added to cart successfully',
+                              icon: const Icon(
+                                CupertinoIcons.checkmark_circle_fill,
+                                color: Colors.blue,
+                              )).show();
+                        } else {
+                          Get.snackbar('failed', 'failed to add item to cart ',
+                              icon: Icon(
+                                CupertinoIcons.xmark_circle_fill,
+                                color: Colors.red.shade300,
+                              )).show();
                         }
                       },
                       child: const Center(child: Icon(CupertinoIcons.plus)),
