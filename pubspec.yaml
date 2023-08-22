@@ -46,6 +46,7 @@ dependencies:
   rounded_loading_button: ^2.1.0
   rating: ^1.0.0-dev.1
   firebase_auth: ^4.7.2
+  icons_plus: ^4.0.0
 
 
 dev_dependencies:
