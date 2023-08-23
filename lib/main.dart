@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:store/ui/pages/main.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:store/ui/pages/options.dart';
+import 'package:store/ui/pages/profile.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -29,5 +31,5 @@ var app = GetMaterialApp(
       ),
     ),
   ),
-  home: const Main(),
+  home: Options(),
 );

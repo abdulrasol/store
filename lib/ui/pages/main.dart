@@ -4,7 +4,7 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:store/ui/pages/cart.dart';
 import 'package:store/ui/pages/categories.dart';
 import 'package:store/ui/pages/home.dart';
-import 'package:store/ui/pages/more.dart';
+import 'package:store/ui/pages/options.dart';
 
 class Main extends StatefulWidget {
   const Main({super.key});
@@ -19,7 +19,7 @@ class _MainState extends State<Main> {
     const Home(),
     const Categories(),
     const Cart(),
-    More(),
+    Options(),
   ];
 
   @override

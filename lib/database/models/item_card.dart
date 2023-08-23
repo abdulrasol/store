@@ -2,10 +2,12 @@ import 'package:store/database/models/prodect_model.dart';
 
 class CartItemModel {
   final ProdectModel item;
+  final String id;
   double quantity;
   late double price;
 
-  CartItemModel({required this.item, required this.quantity}) {
+  CartItemModel(
+      {required this.id, required this.item, required this.quantity}) {
     price = item.price * quantity;
   }
   void increaseQuantity() {
@@ -21,8 +23,8 @@ class CartItemModel {
     };
   }
 
-  static CartItemModel fromMap(price, Map<String, dynamic> map) {
+  static CartItemModel fromMap(Map<String, dynamic> map) {
     return CartItemModel(
-        item: ProdectModel.fromMap(map['item']), quantity: map['quantity']);
+        id: map['id'], item: map['item'], quantity: map['quantity']);
   }
 }

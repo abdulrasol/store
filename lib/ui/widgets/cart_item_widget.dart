@@ -2,10 +2,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:store/database/models/item_card.dart';
+import 'package:store/database/services/items.dart';
 
 class CartItemWidget extends StatelessWidget {
   final CartItemModel item;
-  const CartItemWidget({super.key, required this.item});
+  final void Function() updateView;
+
+  const CartItemWidget(
+      {super.key, required this.item, required this.updateView});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +53,10 @@ class CartItemWidget extends StatelessWidget {
                 ),
                 Center(
                   child: IconButton(
-                    onPressed: () async {},
+                    onPressed: () async {
+                      await deleteCartItem(item.id);
+                      updateView(); // Pass an integer argument here, for example: 42
+                    },
                     icon: const Icon(
                       CupertinoIcons.delete,
                       color: Colors.black87,

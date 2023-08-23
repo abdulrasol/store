@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:store/database/services/controller.dart';
 
 class Auth {
+  final controller = Get.put(Controller());
   static Future<String?> createUser(
       {required String email, required String password}) async {
     try {
@@ -12,9 +15,12 @@ class Auth {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredential.user!.uid)
-            .set({
-          'id': userCredential.user!.uid,
-        });
+            .set(
+          {
+            'id': userCredential.user!.uid,
+            'profileImage': '',
+          },
+        );
       }
       return null; // success
     } on FirebaseAuthException catch (e) {

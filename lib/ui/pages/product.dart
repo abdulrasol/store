@@ -258,7 +258,7 @@ class ProductPage extends StatelessWidget {
                             btnController.reset();
                           } else {
                             var adding = await addCartToCart(CartItemModel(
-                                item: product, quantity: quantity));
+                                item: product, quantity: quantity, id: ''));
                             if (adding == null) {
                               btnController.success();
                             } else {

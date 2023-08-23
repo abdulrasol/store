@@ -85,8 +85,12 @@ class ProductCart extends StatelessWidget {
                         if (controller.user.value == null) {
                           logingCheckingSnakBar;
                         }
-                        var adding = await addCartToCart(CartItemModel(
-                            item: product, quantity: product.increaseAmount));
+                        var adding = await addCartToCart(
+                          CartItemModel(
+                              item: product,
+                              quantity: product.increaseAmount,
+                              id: ''),
+                        );
                         if (adding == null) {
                           Get.snackbar(
                               'success', 'product added to cart successfully',

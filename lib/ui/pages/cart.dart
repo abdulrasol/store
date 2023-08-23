@@ -18,6 +18,10 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final controller = Get.put(Controller());
+  int? updateView() {
+    setState(() {});
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,6 @@ class _CartState extends State<Cart> {
                             child: CircularProgressIndicator(),
                           );
                         } else if (snapshot.hasError) {
-                          print(snapshot.error);
                           return const Placeholder();
                         } else if (snapshot.hasData) {
                           final cartItems = snapshot.data!;
@@ -59,7 +62,10 @@ class _CartState extends State<Cart> {
                             itemCount: cartItems.length,
                             itemBuilder: (BuildContext context, int index) {
                               final item = cartItems[index];
-                              return CartItemWidget(item: item);
+                              return CartItemWidget(
+                                item: item,
+                                updateView: updateView,
+                              );
                             },
                           );
                         } else {

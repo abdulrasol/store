@@ -72,10 +72,14 @@ Future<List<CartItemModel>> getCartItems() async {
 
   return items.docs.map((e) {
     final item = e.data()['item'];
-    //final price = e.data()['price'];
+    final id = e.id;
     final quantity = e.data()['quantity'];
 
-    return CartItemModel(item: ProdectModel.fromMap(item), quantity: quantity);
+    return CartItemModel(
+      id: id,
+      quantity: quantity,
+      item: ProdectModel.fromMap(item),
+    );
   }).toList();
 }
 
@@ -90,7 +94,7 @@ Future<String?> deleteCartItem(String id) async {
         .doc(id)
         .delete();
     return null;
-  } on Exception catch (e) {
+  } on Exception {
     return 'Error';
   }
 }
