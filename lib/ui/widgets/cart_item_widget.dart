@@ -44,7 +44,7 @@ class CartItemWidget extends StatelessWidget {
                           style: const TextStyle(fontSize: 12),
                         ),
                         Text(
-                          'total price: ${item.price.toString()}\$ for ${item.quantity} ${item.item.sellUnit}',
+                          'total price: ${item.price.toStringAsFixed(2)}\$ for ${item.quantity} ${item.item.sellUnit}',
                           style: const TextStyle(fontSize: 14),
                         )
                       ],

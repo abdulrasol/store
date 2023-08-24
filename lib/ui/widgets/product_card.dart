@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:store/database/models/prodect_model.dart';
 import 'package:store/ui/pages/product.dart';
-
 import '../../database/models/item_card.dart';
 import '../../database/services/controller.dart';
 import '../../database/services/items.dart';
@@ -18,6 +17,7 @@ class ProductCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(Controller());
+
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5.0),
@@ -82,9 +82,7 @@ class ProductCart extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0))),
                       ),
                       onPressed: () async {
-                        if (controller.user.value == null) {
-                          logingCheckingSnakBar;
-                        }
+                        if (controller.user.value == null) {}
                         var adding = await addCartToCart(
                           CartItemModel(
                               item: product,
@@ -93,17 +91,16 @@ class ProductCart extends StatelessWidget {
                         );
                         if (adding == null) {
                           Get.snackbar(
-                              'success', 'product added to cart successfully',
-                              icon: const Icon(
-                                CupertinoIcons.checkmark_circle_fill,
-                                color: Colors.blue,
-                              )).show();
+                            'success',
+                            'product added to cart successfully',
+                            icon: const Icon(
+                              CupertinoIcons.checkmark_circle_fill,
+                              color: Colors.blue,
+                            ),
+                            duration: const Duration(milliseconds: 300),
+                          ).show();
                         } else {
-                          Get.snackbar('failed', 'failed to add item to cart ',
-                              icon: Icon(
-                                CupertinoIcons.xmark_circle_fill,
-                                color: Colors.red.shade300,
-                              )).show();
+                          showloginRequiredAlert();
                         }
                       },
                       child: const Center(child: Icon(CupertinoIcons.plus)),

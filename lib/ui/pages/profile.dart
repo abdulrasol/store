@@ -25,7 +25,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: genericAppBar(
-        title: 'Settings',
+        title: 'Profile',
         withBackAction: true,
         centerTitle: true,
         showSearchIcon: false,

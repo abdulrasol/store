@@ -42,10 +42,10 @@ class SettingsSectionWidgetCard extends StatelessWidget {
           CupertinoIcons.forward,
           size: 30,
         ),
-        onTap: () {
+        onTap: () async {
           if (loginRequired) {
             if (controller.user.value == null) {
-              logingCheckingSnakBar;
+              showloginRequiredAlert();
             } else {
               Get.to(() => newPage);
             }

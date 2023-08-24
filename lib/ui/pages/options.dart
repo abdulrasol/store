@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:store/database/services/controller.dart';
+import 'package:store/ui/pages/about.dart';
 import 'package:store/ui/pages/auth_page.dart';
 import 'package:store/ui/pages/profile.dart';
+import 'package:store/ui/pages/app_options.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
 import 'package:store/ui/widgets/options_section_card.dart';
 
@@ -98,7 +100,7 @@ class Options extends StatelessWidget {
                 controller: controller,
                 icon: CupertinoIcons.gear_alt_fill,
                 title: 'Options',
-                newPage: const Profile(),
+                newPage: const AppOptions(),
                 buttonBorder: 0,
                 loginRequired: false,
               ),
@@ -106,7 +108,7 @@ class Options extends StatelessWidget {
                 controller: controller,
                 icon: CupertinoIcons.info_circle_fill,
                 title: 'About',
-                newPage: const Profile(),
+                newPage: const About(),
                 buttonBorder: 2,
                 loginRequired: false,
               ),

@@ -31,5 +31,5 @@ var app = GetMaterialApp(
       ),
     ),
   ),
-  home: Options(),
+  home: const Main(),
 );
