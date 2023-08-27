@@ -1,8 +1,11 @@
+import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:store/database/services/auth.dart';
 import 'package:store/database/services/controller.dart';
 import 'package:store/ui/widgets/decoration.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
@@ -18,8 +21,23 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final controller = Get.put(Controller());
-
   final btnController = RoundedLoadingButtonController();
+  late Uint8List _selectedImage;
+  bool selectImage = false;
+  Future<void> imagePicker() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+
+    if (result != null) {
+      print('object');
+      await Auth.updateUserData({
+        'profileImage': result.files[0].bytes!.toString(),
+      });
+      setState(() {
+        _selectedImage = result.files[0].bytes!;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +60,14 @@ class _ProfileState extends State<Profile> {
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          const CircleAvatar(
-                            radius: 75, // Adjust the radius as needed
-                          ),
+                          controller.userData.value.profileImage != ''
+                              ? CircleAvatar(
+                                  radius: 75, // Adjust the radius as needed
+                                  backgroundImage: MemoryImage(_selectedImage),
+                                )
+                              : const CircleAvatar(
+                                  radius: 75, // Adjust the radius as needed
+                                ),
                           Positioned(
                             bottom: 0,
                             right: 0,
@@ -56,6 +79,7 @@ class _ProfileState extends State<Profile> {
                               child: IconButton(
                                 icon: const Icon(Icons.edit),
                                 onPressed: () {
+                                  imagePicker();
                                   // Handle edit profile picture action
                                 },
                               ),
@@ -76,19 +100,23 @@ class _ProfileState extends State<Profile> {
                         const SizedBox(width: 15),
                         const Icon(CupertinoIcons.person),
                         const SizedBox(width: 15),
-                        Text(controller.user.value!.displayName ??
+                        Text(FirebaseAuth.instance.currentUser?.displayName ??
                             'edit your name!'),
                         const Expanded(child: sizedBox),
                         IconButton(
-                            onPressed: () async {
-                              void updateState() {
-                                setState(() {});
-                              }
-
-                              await changeUserInfo(context,
-                                  upadedState: updateState);
-                            },
-                            icon: const Icon(Icons.edit)),
+                          onPressed: () async {
+                            await Get.defaultDialog(
+                              titlePadding: const EdgeInsets.only(top: 15),
+                              title: 'update your full name',
+                              content: const UpdateprofileInfo(
+                                nameOrEmail: true,
+                              ),
+                            ).then((value) {
+                              setState(() {});
+                            });
+                          },
+                          icon: const Icon(Icons.edit),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 35),
@@ -107,10 +135,16 @@ class _ProfileState extends State<Profile> {
                             controller.user.value!.email ?? 'edit your email!'),
                         const Expanded(child: sizedBox),
                         IconButton(
-                            onPressed: () {
-                              FirebaseAuth.instance.sendPasswordResetEmail(
-                                  email: controller.user.value!.email ??
-                                      'edit your email!');
+                            onPressed: () async {
+                              await Get.defaultDialog(
+                                titlePadding: const EdgeInsets.only(top: 15),
+                                title: 'update email',
+                                content: const UpdateprofileInfo(
+                                  nameOrEmail: false,
+                                ),
+                              ).then((value) {
+                                setState(() {});
+                              });
                             },
                             icon: const Icon(Icons.edit)),
                       ],
@@ -218,5 +252,87 @@ class _ProfileState extends State<Profile> {
                 ),
               );
             }));
+  }
+}
+
+class UpdateprofileInfo extends StatelessWidget {
+  final bool nameOrEmail;
+
+  const UpdateprofileInfo({super.key, required this.nameOrEmail});
+
+  @override
+  Widget build(BuildContext context) {
+    final GlobalKey<FormState> key = GlobalKey<FormState>();
+    final btnController = RoundedLoadingButtonController();
+    final textController = TextEditingController();
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Form(
+        key: key,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              decoration: inputDecoration.copyWith(
+                label: Text(
+                  nameOrEmail ? 'your name' : 'your Email',
+                  style: const TextStyle(color: Colors.black87),
+                ),
+              ),
+              controller: textController,
+              validator: (value) {
+                if (nameOrEmail) {
+                  if (value == '') {
+                    return 'please write your name';
+                  } else {
+                    return null;
+                  }
+                } else if (!nameOrEmail) {
+                  if (value == '') {
+                    return 'please write your email';
+                  }
+                  if (!GetUtils.isEmail(value!)) {
+                    return 'enter valide email';
+                  } else {
+                    return null;
+                  }
+                }
+              },
+              onChanged: (value) {
+                btnController.reset();
+              },
+            ),
+            sizedBox,
+            RoundedLoadingButton(
+              borderRadius: 8,
+              color: Colors.black87,
+              successColor: Colors.black87,
+              errorColor: Colors.red.shade300,
+              controller: btnController,
+              onPressed: () async {
+                if (key.currentState!.validate()) {
+                  if (nameOrEmail) {
+                    await FirebaseAuth.instance.currentUser
+                        ?.updateDisplayName(textController.text)
+                        .then(
+                          (value) => Get.back(),
+                        );
+                  } else {
+                    await FirebaseAuth.instance.currentUser
+                        ?.verifyBeforeUpdateEmail(textController.text)
+                        .then(
+                          (value) => Get.back(),
+                        );
+                  }
+                } else {
+                  btnController.reset();
+                }
+              },
+              child: const Text('update'),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

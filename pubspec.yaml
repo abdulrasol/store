@@ -49,6 +49,7 @@ dependencies:
   icons_plus: ^4.0.0
   current_location: ^0.0.3
   open_street_map_search_and_pick: ^0.1.0
+  file_picker: ^5.3.4
  
   
   

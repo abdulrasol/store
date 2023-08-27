@@ -19,7 +19,7 @@ class LoginWidget extends StatelessWidget {
         RoundedLoadingButton(
           color: Colors.black87,
           onPressed: () async {
-            await Get.to(const AuthPage())
+            await Get.to(() => const AuthPage())
                 ?.then((value) => controller.success());
           },
           controller: controller,

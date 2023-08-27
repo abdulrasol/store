@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:store/ui/pages/add_new_address.dart';
-import 'package:store/ui/pages/user_adress_list.dart';
+import 'package:store/ui/pages/profile.dart';
 import 'package:store/ui/pages/cart.dart';
 import 'package:store/ui/pages/main.dart';
 import 'package:firebase_core/firebase_core.dart';
