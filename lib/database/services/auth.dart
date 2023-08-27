@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:store/database/models/user_adress_model.dart';
 import 'package:store/database/services/controller.dart';
 
 class Auth {
   final controller = Get.put(Controller());
+  static final userAddresscollection = FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('address');
   static Future<String?> createUser(
       {required String email, required String password}) async {
     try {
@@ -71,5 +76,34 @@ class Auth {
     }
 
     return null;
+  }
+
+  // get user address list
+  static Future<List<UserAdressModel>> getUserAddressList() async {
+    final adresses = await userAddresscollection.get();
+    return adresses.docs
+        .map((e) => UserAdressModel(
+            id: e.id,
+            title: e.data()['title'],
+            description: e.data()['description'],
+            latitude: e.data()['latitude'],
+            longitude: e.data()['longitude']))
+        .toList();
+  }
+
+  // set new address
+  static Future setNewAddress(UserAdressModel address) async {
+    await userAddresscollection.add(address.toMap());
+  }
+
+  // update address
+  static Future updateAddress(
+      {required String id, required UserAdressModel address}) async {
+    await userAddresscollection.doc(id).update(address.toMap());
+  }
+
+  // delete address
+  static Future deleteAdress(String id) async {
+    await userAddresscollection.doc(id).delete();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:store/ui/pages/cart.dart';
 import 'package:store/ui/pages/categories.dart';
@@ -43,7 +44,7 @@ class _MainState extends State<Main> {
               unselectedColor: Colors.black54,
               selectedColor: Colors.black87),
           SalomonBottomBarItem(
-            icon: const Icon(CupertinoIcons.cart),
+            icon: const Icon(Bootstrap.cart),
             title: const Text('Cart'),
             unselectedColor: Colors.black54,
             selectedColor: Colors.black87,

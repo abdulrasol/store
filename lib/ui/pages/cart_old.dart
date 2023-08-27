@@ -9,14 +9,14 @@ import 'package:store/ui/widgets/page_title.dart';
 
 import '../widgets/generic_app_bar.dart';
 
-class Cart extends StatefulWidget {
-  const Cart({super.key});
+class CartCopy extends StatefulWidget {
+  const CartCopy({super.key});
 
   @override
-  State<Cart> createState() => _CartState();
+  State<CartCopy> createState() => _CartCopyState();
 }
 
-class _CartState extends State<Cart> {
+class _CartCopyState extends State<CartCopy> {
   final controller = Get.put(Controller());
   int? updateView() {
     setState(() {});
@@ -41,8 +41,8 @@ class _CartState extends State<Cart> {
                     ),
                   )
                 : Expanded(
-                    child: StreamBuilder<List<CartItemModel>>(
-                      stream: cartItemsStream,
+                    child: FutureBuilder<List<CartItemModel>>(
+                      future: getCartItems(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {

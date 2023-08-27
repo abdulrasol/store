@@ -83,6 +83,25 @@ Future<List<CartItemModel>> getCartItems() async {
   }).toList();
 }
 
+// as stream
+Stream<QuerySnapshot<Map<String, dynamic>>> getCartAsStream = FirebaseFirestore
+    .instance
+    .collection('users')
+    .doc(FirebaseAuth.instance.currentUser!.uid)
+    .collection('cart')
+    .snapshots();
+
+Stream<List<CartItemModel>> cartItemsStream = getCartAsStream.map((snapshot) {
+  return snapshot.docs.map((doc) {
+    final data = doc.data();
+    final item = ProdectModel.fromMap(data['item']);
+    final id = doc.id;
+    final quantity =
+        data['quantity'] as double; // or int, depending on your data type
+    return CartItemModel(id: id, item: item, quantity: quantity);
+  }).toList();
+});
+
 // delete cart items
 
 Future<String?> deleteCartItem(String id) async {

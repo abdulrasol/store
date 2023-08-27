@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:store/ui/pages/add_new_address.dart';
+import 'package:store/ui/pages/user_adress_list.dart';
+import 'package:store/ui/pages/cart.dart';
 import 'package:store/ui/pages/main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:store/ui/pages/options.dart';
-import 'package:store/ui/pages/profile.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -31,5 +33,11 @@ var app = GetMaterialApp(
       ),
     ),
   ),
+  routes: {
+    //'main': (contect) => const Main(),
+    'cart': (contect) => const Cart(),
+    'options': (contect) => Options(),
+  },
+  initialRoute: 'main',
   home: const Main(),
 );

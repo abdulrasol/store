@@ -1,11 +1,11 @@
 import 'package:store/database/models/item_card.dart';
-import 'package:store/database/models/user_adress.dart';
+import 'package:store/database/models/user_adress_model.dart';
 
 class OrderModel {
   final String userId;
   final List<CartItemModel> items;
   final String timestamp;
-  final UserAdress adress;
+  final UserAdressModel adress;
   final double price;
   final String state;
 

@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:store/database/models/item_card.dart';
 import 'package:store/database/services/items.dart';
 
-class CartItemWidget extends StatelessWidget {
+class CartItemWidget extends StatefulWidget {
   final CartItemModel item;
   final void Function() updateView;
 
@@ -12,11 +13,18 @@ class CartItemWidget extends StatelessWidget {
       {super.key, required this.item, required this.updateView});
 
   @override
+  State<CartItemWidget> createState() => _CartItemWidgetState();
+}
+
+class _CartItemWidgetState extends State<CartItemWidget> {
+  final btnController = RoundedLoadingButtonController();
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: SizedBox(
-        height: 100,
+        height: 120,
         width: double.infinity,
         child: Card(
           margin: const EdgeInsets.all(5),
@@ -26,7 +34,7 @@ class CartItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.memory(base64Decode(item.item.image)),
+                Image.memory(base64Decode(widget.item.item.image)),
                 const SizedBox(width: 20),
                 Expanded(
                   child: SizedBox(
@@ -36,15 +44,15 @@ class CartItemWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          item.item.name,
+                          widget.item.item.name,
                           style: const TextStyle(fontSize: 18),
                         ),
                         Text(
-                          '${item.item.price.toString()} \$ per ${item.item.sellUnit}',
+                          '${widget.item.item.price.toString()} \$ per ${widget.item.item.sellUnit}',
                           style: const TextStyle(fontSize: 12),
                         ),
                         Text(
-                          'total price: ${item.price.toStringAsFixed(2)}\$ for ${item.quantity} ${item.item.sellUnit}',
+                          'total price: ${widget.item.price.toStringAsFixed(2)}\$ for ${widget.item.quantity} ${widget.item.item.sellUnit}',
                           style: const TextStyle(fontSize: 14),
                         )
                       ],
@@ -52,13 +60,18 @@ class CartItemWidget extends StatelessWidget {
                   ),
                 ),
                 Center(
-                  child: IconButton(
+                  child: RoundedLoadingButton(
+                    elevation: 0,
+                    color: Colors.white,
+                    valueColor: Colors.black87,
+                    width: 50,
+                    controller: btnController,
                     onPressed: () async {
-                      await deleteCartItem(item.id);
-                      updateView(); // Pass an integer argument here, for example: 42
+                      await deleteCartItem(widget.item.id)
+                          .then((value) => btnController.reset());
                     },
-                    icon: const Icon(
-                      CupertinoIcons.delete,
+                    child: const Icon(
+                      Bootstrap.x_circle_fill,
                       color: Colors.black87,
                     ),
                   ),

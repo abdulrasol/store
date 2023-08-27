@@ -10,6 +10,7 @@ import 'package:store/ui/pages/app_options.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
 import 'package:store/ui/widgets/options_section_card.dart';
 
+import 'user_adress_list.dart';
 import 'orders.dart';
 
 class Options extends StatelessWidget {
@@ -83,7 +84,7 @@ class Options extends StatelessWidget {
                 controller: controller,
                 icon: CupertinoIcons.location_solid,
                 title: 'Shipping Adresses',
-                newPage: const Profile(),
+                newPage: const UserAddressList(),
                 buttonBorder: 2,
                 loginRequired: true,
               ),

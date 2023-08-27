@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:icons_plus/icons_plus.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:store/database/models/prodect_model.dart';
 import 'package:store/ui/pages/product.dart';
@@ -17,6 +18,7 @@ class ProductCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(Controller());
+    final btnController = RoundedLoadingButtonController();
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -67,20 +69,14 @@ class ProductCart extends StatelessWidget {
                         )
                       ],
                     ),
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.black87),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                        elevation: MaterialStateProperty.all(2),
-                        minimumSize:
-                            MaterialStateProperty.all(const Size(35, 35)),
-                        maximumSize:
-                            MaterialStateProperty.all(const Size(35, 35)),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0))),
-                      ),
+                    RoundedLoadingButton(
+                      width: 45,
+                      height: 38,
+                      borderRadius: 45,
+                      elevation: 2,
+                      color: Colors.white,
+                      valueColor: Colors.black87,
+                      controller: btnController,
                       onPressed: () async {
                         if (controller.user.value == null) {}
                         var adding = await addCartToCart(
@@ -90,20 +86,18 @@ class ProductCart extends StatelessWidget {
                               id: ''),
                         );
                         if (adding == null) {
-                          Get.snackbar(
-                            'success',
-                            'product added to cart successfully',
-                            icon: const Icon(
-                              CupertinoIcons.checkmark_circle_fill,
-                              color: Colors.blue,
-                            ),
-                            duration: const Duration(milliseconds: 300),
-                          ).show();
+                          btnController.success();
                         } else {
                           showloginRequiredAlert();
                         }
                       },
-                      child: const Center(child: Icon(CupertinoIcons.plus)),
+                      child: const Center(
+                        child: Icon(
+                          Bootstrap.cart_plus,
+                          color: Colors.black87,
+                          size: 25,
+                        ),
+                      ),
                     ),
                   ],
                 )
