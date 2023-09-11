@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:store/database/models/category_model.dart';
@@ -17,6 +18,16 @@ class Controller extends GetxController {
   Rx<User?> user = Rx<User?>(null);
   Rx<UserModel> userData = Rx<UserModel>(UserModel(profileImage: ''));
 
+  Future<void> updateUserImagePrifle() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.value!.uid)
+        .get()
+        .then((data) {
+      userData.value = UserModel(profileImage: data.data()?['profileImage']);
+    });
+  }
+
   @override
   void onInit() async {
     // get products, categories and Sliders List
@@ -28,8 +39,10 @@ class Controller extends GetxController {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       this.user.value = user;
     });
+
     if (user.value != null) {
       userData.value = await Auth.getUserData();
+      await updateUserImagePrifle();
     }
     super.onInit();
   }

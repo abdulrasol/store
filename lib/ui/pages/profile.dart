@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,7 @@ import 'package:store/database/services/auth.dart';
 import 'package:store/database/services/controller.dart';
 import 'package:store/ui/widgets/decoration.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 import '../widgets/login.dart';
 
@@ -22,20 +24,24 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final controller = Get.put(Controller());
   final btnController = RoundedLoadingButtonController();
-  late Uint8List _selectedImage;
+
   bool selectImage = false;
   Future<void> imagePicker() async {
+    Uint8List? imageList;
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(type: FileType.image);
 
     if (result != null) {
-      print('object');
+      imageList = await FlutterImageCompress.compressWithList(
+        result.files[0].bytes!,
+        quality: 80,
+      );
+
       await Auth.updateUserData({
-        'profileImage': result.files[0].bytes!.toString(),
+        'profileImage': imageList.toString(),
       });
-      setState(() {
-        _selectedImage = result.files[0].bytes!;
-      });
+      await controller.updateUserImagePrifle();
+      setState(() {});
     }
   }
 
@@ -60,14 +66,13 @@ class _ProfileState extends State<Profile> {
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          controller.userData.value.profileImage != ''
-                              ? CircleAvatar(
-                                  radius: 75, // Adjust the radius as needed
-                                  backgroundImage: MemoryImage(_selectedImage),
-                                )
-                              : const CircleAvatar(
-                                  radius: 75, // Adjust the radius as needed
-                                ),
+                          CircleAvatar(
+                            radius: 75, // Adjust the radius as needed
+                            backgroundImage: MemoryImage(
+                              base64Decode(
+                                  controller.userData.value.profileImage),
+                            ),
+                          ),
                           Positioned(
                             bottom: 0,
                             right: 0,
