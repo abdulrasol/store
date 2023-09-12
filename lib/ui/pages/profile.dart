@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:store/database/services/auth.dart';
 import 'package:store/database/services/controller.dart';
+import 'package:store/database/services/storage.dart';
 import 'package:store/ui/widgets/decoration.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -25,20 +26,41 @@ class _ProfileState extends State<Profile> {
   final controller = Get.put(Controller());
   final btnController = RoundedLoadingButtonController();
 
-  bool selectImage = false;
+  // bool selectImage = false;
+  Uint8List imageSelected = Uint8List(0);
+  Future<Uint8List> selectImage() async {
+    FilePickerResult? image = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      dialogTitle: 'Select profile Picture',
+    );
+    if (image != null) {
+      imageSelected = await FlutterImageCompress.compressWithList(
+        image.files[0].bytes!,
+        quality: 50,
+      );
+      // final ref = userProfileRef.child(controller.user.value!.uid);
+      // await ref.putData(imageSelected).then((p0) => p0.ref.storage);
+      await Auth.updateUserData({
+        'profileImage': imageSelected,
+      });
+      setState(() {});
+      return image.files[0].bytes!;
+    }
+
+    return Uint8List(0);
+  }
+
   Future<void> imagePicker() async {
     Uint8List? imageList;
+
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(type: FileType.image);
 
     if (result != null) {
-      imageList = await FlutterImageCompress.compressWithList(
-        result.files[0].bytes!,
-        quality: 80,
-      );
-
       await Auth.updateUserData({
-        'profileImage': imageList.toString(),
+        'profileImage': base64Encode(
+          imageList!.toList(),
+        )
       });
       await controller.updateUserImagePrifle();
       setState(() {});
@@ -69,9 +91,9 @@ class _ProfileState extends State<Profile> {
                           CircleAvatar(
                             radius: 75, // Adjust the radius as needed
                             backgroundImage: MemoryImage(
-                              base64Decode(
-                                  controller.userData.value.profileImage),
+                              controller.userData.value.imageData,
                             ),
+                            // child: Image.memory(imageSelected),
                           ),
                           Positioned(
                             bottom: 0,
@@ -83,8 +105,8 @@ class _ProfileState extends State<Profile> {
                               ),
                               child: IconButton(
                                 icon: const Icon(Icons.edit),
-                                onPressed: () {
-                                  imagePicker();
+                                onPressed: () async {
+                                  await selectImage();
                                   // Handle edit profile picture action
                                 },
                               ),
@@ -302,6 +324,7 @@ class UpdateprofileInfo extends StatelessWidget {
                     return null;
                   }
                 }
+                return null;
               },
               onChanged: (value) {
                 btnController.reset();
