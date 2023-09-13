@@ -26,44 +26,35 @@ class _ProfileState extends State<Profile> {
   final controller = Get.put(Controller());
   final btnController = RoundedLoadingButtonController();
 
-  // bool selectImage = false;
-  Uint8List imageSelected = Uint8List(0);
-  Future<Uint8List> selectImage() async {
-    FilePickerResult? image = await FilePicker.platform.pickFiles(
+  Future<void> selectImage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.image,
       dialogTitle: 'Select profile Picture',
     );
-    if (image != null) {
-      imageSelected = await FlutterImageCompress.compressWithList(
-        image.files[0].bytes!,
-        quality: 50,
-      );
-      // final ref = userProfileRef.child(controller.user.value!.uid);
-      // await ref.putData(imageSelected).then((p0) => p0.ref.storage);
-      await Auth.updateUserData({
-        'profileImage': imageSelected,
-      });
-      setState(() {});
-      return image.files[0].bytes!;
-    }
-
-    return Uint8List(0);
-  }
-
-  Future<void> imagePicker() async {
-    Uint8List? imageList;
-
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.image);
 
     if (result != null) {
+      Uint8List imageBytes = result.files.single.bytes!;
+
+      // Compress and resize the image if needed
+      imageBytes = await FlutterImageCompress.compressWithList(
+        imageBytes,
+        quality: 50,
+        minHeight: 200, // Set your preferred image height
+        minWidth: 200, // Set your preferred image width
+      );
+
+      // Convert the image to a base64-encoded string
+      String base64Image = base64Encode(imageBytes);
+
+      // Update the user's data in Firebase
       await Auth.updateUserData({
-        'profileImage': base64Encode(
-          imageList!.toList(),
-        )
+        'profileImage': base64Image,
       });
-      await controller.updateUserImagePrifle();
-      setState(() {});
+
+      // Update the UI to reflect the new image
+      setState(() {
+        controller.userData.value.profileImage = base64Image;
+      });
     }
   }
 
@@ -91,10 +82,11 @@ class _ProfileState extends State<Profile> {
                           CircleAvatar(
                             radius: 75, // Adjust the radius as needed
                             backgroundImage: MemoryImage(
-                              controller.userData.value.imageData,
+                              base64Decode(
+                                  controller.userData.value.profileImage),
                             ),
-                            // child: Image.memory(imageSelected),
                           ),
+                          // child: Image.memory(imageSelected),
                           Positioned(
                             bottom: 0,
                             right: 0,
