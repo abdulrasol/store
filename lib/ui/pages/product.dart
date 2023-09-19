@@ -28,13 +28,7 @@ class ProductPage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: genericAppBar(
-        title: product.name,
-        withBackAction: true,
-        showSearchIcon: false,
-        centerTitle: true,
-        context: context,
-      ),
+      appBar: appBar(context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: Stack(
@@ -47,91 +41,8 @@ class ProductPage extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height / 3,
-                        child: Image.memory(base64
-                            .decode(product.image)) //Image.network(item.image),
-                        ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.name,
-                          style: const TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const Text(
-                          'product code: BUK1231',
-                          //style: const TextStyle(),
-                        ),
-                        const SizedBox(height: 10),
-                        // read only rating bar
-                        Row(
-                          children: [
-                            const RatingBar.readOnly(
-                              filledIcon: CupertinoIcons.heart_fill,
-                              emptyIcon: CupertinoIcons.heart,
-                              size: 28,
-                              initialRating: 3.5,
-                              maxRating: 5,
-                              filledColor: Colors.black87,
-                              emptyColor: Colors.black12,
-                            ),
-                            const Expanded(child: SizedBox()),
-                            TextButton(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) => BottomSheet(
-                                        onClosing: () {},
-                                        builder: (context) {
-                                          return ratingBottomSheet(
-                                              product.name);
-                                        }));
-                              },
-                              child: const Text(
-                                'Add your review',
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        sizedBox,
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: '${product.price} \$ ',
-                                style: const TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'per ${product.sellUnit}',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey[700]!,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        //sizedBox,
-                        sectionTitle('Product descrption'),
-                        Text(
-                          product.description,
-                          style: const TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
+                    productImage(context),
+                    productDetails(context, sizedBox),
                     sectionTitle('Order Quantities'),
                     UpdateCount(
                       product: product,
@@ -143,50 +54,7 @@ class ProductPage extends StatelessWidget {
                     sectionTitle('Users Reviews'),
                     const Column(
                       children: [
-                        Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CircleAvatar(
-                                  child: Icon(
-                                    CupertinoIcons.person,
-                                    size: 50,
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text('User Name'),
-                                          Expanded(child: sizedBox),
-                                          RatingBar.readOnly(
-                                            filledIcon:
-                                                CupertinoIcons.heart_fill,
-                                            emptyIcon: CupertinoIcons.heart,
-                                            size: 28,
-                                            initialRating: 2.5,
-                                            maxRating: 5,
-                                            filledColor: Colors.black87,
-                                            emptyColor: Colors.black12,
-                                          ),
-                                        ],
-                                      ),
-                                      sizedBox,
-                                      Text(
-                                          'Commodi quam quo nulla id veritatis non. Totam unde qui molestias consequatur hic repellendus odio. Tenetur aliquid officiis consectetur. Reiciendis porro aut. Libero qui incidunt nemo at corporis et. Dolorem dolores facere optio non optio modi.'),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                        //ReviewCard(review: review),
                         Card(
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
@@ -274,6 +142,117 @@ class ProductPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Column productDetails(BuildContext context, SizedBox sizedBox) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          product.name,
+          style: const TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const Text(
+          'product code: BUK1231',
+          //style: const TextStyle(),
+        ),
+        const SizedBox(height: 10),
+        // read only rating bar
+        starsRatingAndAddReview(context), // add reviews and stars
+        sizedBox,
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: '${product.price} \$ ',
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextSpan(
+                text: 'per ${product.sellUnit}',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[700]!,
+                ),
+              )
+            ],
+          ),
+        ),
+        //sizedBox,
+        sectionTitle('Product descrption'),
+        Text(
+          product.description,
+          style: const TextStyle(
+            fontSize: 18,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row starsRatingAndAddReview(BuildContext context) {
+    return Row(
+      children: [
+        const RatingBar.readOnly(
+          filledIcon: CupertinoIcons.heart_fill,
+          emptyIcon: CupertinoIcons.heart,
+          size: 28,
+          initialRating: 3.5,
+          maxRating: 5,
+          filledColor: Colors.black87,
+          emptyColor: Colors.black12,
+        ),
+        const Expanded(child: SizedBox()),
+        TextButton(
+          onPressed: () {
+            if (controller.user.value != null) {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) => BottomSheet(
+                      onClosing: () {},
+                      builder: (context) {
+                        return ratingBottomSheet(product.name, product.id, {
+                          'user_id': controller.user.value!.uid,
+                          'user_name': controller.user.value!.displayName,
+                        });
+                      }));
+            } else {
+              showloginRequiredAlert();
+            }
+          },
+          child: const Text(
+            'Add your review',
+            style: TextStyle(
+              color: Colors.black87,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  SizedBox productImage(BuildContext context) {
+    return SizedBox(
+        height: MediaQuery.of(context).size.height / 3,
+        child: Image.memory(
+            base64.decode(product.image)) //Image.network(item.image),
+        );
+  }
+
+  AppBar appBar(BuildContext context) {
+    return genericAppBar(
+      title: product.name,
+      withBackAction: true,
+      showSearchIcon: false,
+      centerTitle: true,
+      context: context,
     );
   }
 

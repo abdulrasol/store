@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,7 @@ import 'user_adress_list.dart';
 import 'orders.dart';
 
 class Options extends StatelessWidget {
-  Options({super.key});
+  Options({Key? key});
   final controller = Get.put(Controller());
 
   @override
@@ -34,138 +36,174 @@ class Options extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 50),
-              const SizedBox(
-                width: double.infinity,
-                height: 175,
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey,
-                  child: Icon(
-                    CupertinoIcons.person_alt_circle_fill,
-                    size: 175,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
+              _buildProfileImage(),
               const SizedBox(height: 50),
-              const Padding(
-                padding: EdgeInsets.only(left: 17),
-                child: Text(
-                  'Shopping',
-                  style: TextStyle(color: Colors.black54, fontSize: 16),
-                ),
-              ),
+              _buildSectionTitle('Shopping'),
               const Divider(),
-              SettingsSectionWidgetCard(
-                controller: controller,
-                icon: Icons.shop_2_sharp,
-                title: 'Orders',
-                newPage: const Orders(),
-                buttonBorder: 0,
-                loginRequired: true,
-              ),
+              _buildOrdersSection(),
               const SizedBox(height: 50),
-              const Padding(
-                padding: EdgeInsets.only(left: 17),
-                child: Text(
-                  'Account Settings',
-                  style: TextStyle(color: Colors.black54, fontSize: 16),
-                ),
-              ),
+              _buildSectionTitle('Account Settings'),
               const Divider(),
-              SettingsSectionWidgetCard(
-                controller: controller,
-                icon: CupertinoIcons.profile_circled,
-                title: 'Profile',
-                newPage: const Profile(),
-                buttonBorder: 0,
-                loginRequired: true,
-              ),
-              SettingsSectionWidgetCard(
-                controller: controller,
-                icon: CupertinoIcons.location_solid,
-                title: 'Shipping Adresses',
-                newPage: const UserAddressList(),
-                buttonBorder: 2,
-                loginRequired: true,
-              ),
+              _buildProfileSection(),
+              _buildShippingAddressesSection(),
               const SizedBox(height: 35),
-              const Padding(
-                padding: EdgeInsets.only(left: 17),
-                child: Text(
-                  'Application',
-                  style: TextStyle(color: Colors.black54, fontSize: 16),
-                ),
-              ),
+              _buildSectionTitle('Application'),
               const Divider(),
-              SettingsSectionWidgetCard(
-                controller: controller,
-                icon: CupertinoIcons.gear_alt_fill,
-                title: 'Options',
-                newPage: const AppOptions(),
-                buttonBorder: 0,
-                loginRequired: false,
-              ),
-              SettingsSectionWidgetCard(
-                controller: controller,
-                icon: CupertinoIcons.info_circle_fill,
-                title: 'About',
-                newPage: const About(),
-                buttonBorder: 2,
-                loginRequired: false,
-              ),
+              _buildAppOptionsSection(),
+              _buildAboutSection(),
               const SizedBox(height: 35),
-              Obx(
-                () => controller.user.value != null
-                    ? Center(
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            elevation: MaterialStateProperty.all(2),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black87),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    10.0), // Set the desired border radius here
-                              ),
-                            ),
-                            minimumSize: MaterialStateProperty.all(
-                                const Size(300, 50.0)),
-                          ),
-                          onPressed: () async {
-                            await FirebaseAuth.instance.signOut();
-                          },
-                          child: const Text(
-                            'Log out',
-                          ),
-                        ),
-                      )
-                    : Center(
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            elevation: MaterialStateProperty.all(2),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black87),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    10.0), // Set the desired border radius here
-                              ),
-                            ),
-                            minimumSize: MaterialStateProperty.all(
-                                const Size(300, 50.0)),
-                          ),
-                          onPressed: () {
-                            Get.to(() => const AuthPage());
-                          },
-                          child: const Text('Sign in'),
-                        ),
-                      ),
-              )
+              _buildSignOutButton(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  // Helper method to build the user's profile image
+  Widget _buildProfileImage() {
+    return SizedBox(
+      width: double.infinity,
+      height: 175,
+      child: CircleAvatar(
+        radius: 75,
+        backgroundColor: Colors.grey,
+        backgroundImage: controller.userData.value.profileImage != ''
+            ? MemoryImage(
+                base64Decode(
+                  controller.userData.value.profileImage,
+                ),
+              )
+            : null,
+        child: controller.user.value == null
+            ? const Icon(
+                CupertinoIcons.person_alt_circle_fill,
+                size: 175,
+                color: Colors.black54,
+              )
+            : null,
+      ),
+    );
+  }
+
+  // Helper method to build section titles
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 17),
+      child: Text(
+        title,
+        style: const TextStyle(color: Colors.black54, fontSize: 16),
+      ),
+    );
+  }
+
+  // Helper method to build the Orders section
+  Widget _buildOrdersSection() {
+    return SettingsSectionWidgetCard(
+      controller: controller,
+      icon: Icons.shop_2_sharp,
+      title: 'Orders',
+      newPage: const Orders(),
+      buttonBorder: 0,
+      loginRequired: true,
+    );
+  }
+
+  // Helper method to build the Profile section
+  Widget _buildProfileSection() {
+    return SettingsSectionWidgetCard(
+      controller: controller,
+      icon: CupertinoIcons.profile_circled,
+      title: 'Profile',
+      newPage: const Profile(),
+      buttonBorder: 0,
+      loginRequired: true,
+    );
+  }
+
+  // Helper method to build the Shipping Addresses section
+  Widget _buildShippingAddressesSection() {
+    return SettingsSectionWidgetCard(
+      controller: controller,
+      icon: CupertinoIcons.location_solid,
+      title: 'Shipping Addresses',
+      newPage: const UserAddressList(),
+      buttonBorder: 2,
+      loginRequired: true,
+    );
+  }
+
+  // Helper method to build the Application Options section
+  Widget _buildAppOptionsSection() {
+    return SettingsSectionWidgetCard(
+      controller: controller,
+      icon: CupertinoIcons.gear_alt_fill,
+      title: 'Options',
+      newPage: const AppOptions(),
+      buttonBorder: 0,
+      loginRequired: false,
+    );
+  }
+
+  // Helper method to build the About section
+  Widget _buildAboutSection() {
+    return SettingsSectionWidgetCard(
+      controller: controller,
+      icon: CupertinoIcons.info_circle_fill,
+      title: 'About',
+      newPage: const About(),
+      buttonBorder: 2,
+      loginRequired: false,
+    );
+  }
+
+  // Helper method to build the sign-out or sign-in button based on user authentication
+  Widget _buildSignOutButton() {
+    return Obx(
+      () => controller.user.value != null
+          ? _buildLogoutButton()
+          : _buildSignInButton(),
+    );
+  }
+
+  // Helper method to build the Logout button
+  Widget _buildLogoutButton() {
+    return Center(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: 2,
+          backgroundColor: Colors.black87,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+                Radius.circular(10.0)), // Set the desired border radius here
+          ),
+          minimumSize: const Size(300, 50.0),
+        ),
+        onPressed: () async {
+          await FirebaseAuth.instance.signOut();
+        },
+        child: const Text('Log out'),
+      ),
+    );
+  }
+
+  // Helper method to build the Sign-In button
+  Widget _buildSignInButton() {
+    return Center(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: 2,
+          backgroundColor: Colors.black87,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+                Radius.circular(10.0)), // Set the desired border radius here
+          ),
+          minimumSize: const Size(300, 50.0),
+        ),
+        onPressed: () {
+          Get.to(() => const AuthPage());
+        },
+        child: const Text('Sign in'),
       ),
     );
   }

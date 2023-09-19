@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:store/database/models/item_card.dart';
+import 'package:store/database/models/rating_model.dart';
 import 'package:store/database/services/controller.dart';
 
 import '../models/prodect_model.dart';
@@ -116,4 +117,20 @@ Future<String?> deleteCartItem(String id) async {
   } on Exception {
     return 'Error';
   }
+}
+
+// add reivew
+
+Future<int?> addReview(UserRatingModel reivew) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('reviews')
+        .doc(reivew.productId)
+        .set(
+          reivew.toMap(),
+        );
+  } on Exception {
+    return 1;
+  }
+  return 0;
 }

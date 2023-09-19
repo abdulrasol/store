@@ -5,7 +5,6 @@ import 'package:store/database/models/category_model.dart';
 import 'package:store/database/models/prodect_model.dart';
 import 'package:store/database/models/slider_model.dart';
 import 'package:store/database/models/user_model.dart';
-import 'package:store/database/services/auth.dart';
 import 'package:store/database/services/category.dart';
 import 'package:store/database/services/general.dart';
 import 'package:store/database/services/items.dart';
@@ -18,7 +17,7 @@ class Controller extends GetxController {
   Rx<User?> user = Rx<User?>(null);
   Rx<UserModel> userData = Rx<UserModel>(UserModel(profileImage: ''));
 
-  Future<void> updateUserImagePrifle() async {
+  Future<void> updateUserData() async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(user.value!.uid)
@@ -38,12 +37,10 @@ class Controller extends GetxController {
     // Listen to the authStateChanges stream and update the user stream
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       this.user.value = user;
+      if (user != null) {
+        updateUserData();
+      }
     });
-
-    if (user.value != null) {
-      userData.value = await Auth.getUserData();
-      await updateUserImagePrifle();
-    }
     super.onInit();
   }
 }

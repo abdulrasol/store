@@ -1,18 +1,16 @@
-class RatingModel {
+class UserRatingModel {
   final String productId;
-  final String user;
+  final Map user; // {'user_id: string, 'name': string}
   final String reviewText;
-  final String rating;
+  final double rating;
   final String timestamp;
-  final String? userProfile;
 
-  RatingModel({
+  UserRatingModel({
     required this.productId,
     required this.user,
     required this.reviewText,
     required this.rating,
     required this.timestamp,
-    this.userProfile,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,12 +20,11 @@ class RatingModel {
       'reviewText': reviewText,
       'rating': rating,
       'timestamp': timestamp,
-      'userProfile': userProfile,
     };
   }
 
-  static RatingModel fromMap(Map<String, dynamic> map) {
-    return RatingModel(
+  static UserRatingModel fromMap(Map<String, dynamic> map) {
+    return UserRatingModel(
       productId: map['productId'],
       user: map['user'],
       reviewText: map['reviewText'],

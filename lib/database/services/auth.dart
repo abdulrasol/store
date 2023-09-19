@@ -6,11 +6,13 @@ import 'package:store/database/models/user_model.dart';
 import 'package:store/database/services/controller.dart';
 
 class Auth {
-  final controller = Get.put(Controller());
+  static final controller = Get.put(Controller());
   static final userAddresscollection = FirebaseFirestore.instance
       .collection('users')
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection('address');
+  //
+
   static Future<String?> createUser(
       {required String email, required String password}) async {
     try {
@@ -28,6 +30,8 @@ class Auth {
           },
         );
       }
+      // final controller = Get.put(Controller());
+      controller.userData.value = await Auth.getUserData();
       return null; // success
     } on FirebaseAuthException catch (e) {
       // Handle specific FirebaseAuth exceptions
@@ -47,7 +51,8 @@ class Auth {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-
+      // final controller = Get.put(Controller());
+      controller.userData.value = await Auth.getUserData();
       return null; // success
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {
@@ -86,6 +91,7 @@ class Auth {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .get();
+
     return UserModel(profileImage: userData.data()!['profileImage']);
   }
 
