@@ -24,12 +24,12 @@ class PrintRatingController extends RatingController {
   }
 }
 
-Widget ratingBottomSheet(String product_name, String product_id, Map user) {
+Widget ratingBottomSheet(String productName, String productId, Map user) {
   final textEditController = TextEditingController();
   final btnController = RoundedLoadingButtonController();
   const sizedBox = SizedBox(height: 10);
   final GlobalKey<FormState> key = GlobalKey<FormState>();
-  double rating = 2.5;
+  double rating = 1;
 
   return Form(
     key: key,
@@ -39,7 +39,7 @@ Widget ratingBottomSheet(String product_name, String product_id, Map user) {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Rate and tell us your review about $product_name'),
+          Text('Rate and tell us your review about $productName'),
           sizedBox,
           SizedBox(
             width: double.infinity,
@@ -49,7 +49,7 @@ Widget ratingBottomSheet(String product_name, String product_id, Map user) {
                 emptyIcon: CupertinoIcons.heart,
                 alignment: Alignment.center,
                 //isHalfAllowed: true,
-                initialRating: 1,
+                initialRating: rating,
                 maxRating: 5,
                 filledColor: Colors.black87,
                 emptyColor: Colors.black12,
@@ -97,7 +97,7 @@ Widget ratingBottomSheet(String product_name, String product_id, Map user) {
                   DateTime now = DateTime.now();
                   await addReview(
                     UserRatingModel(
-                      productId: product_id,
+                      productId: productId,
                       user: user,
                       reviewText: textEditController.text,
                       rating: rating,

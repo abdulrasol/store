@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:store/database/models/item_card.dart';
 import 'package:store/database/models/prodect_model.dart';
+import 'package:store/database/models/rating_model.dart';
 import 'package:store/database/services/items.dart';
 import 'package:store/ui/widgets/rating_bottm.dart';
 import 'package:store/ui/widgets/small_widget.dart';
+import 'package:store/ui/widgets/user_review_card.dart';
 import '../../database/services/controller.dart';
 import '../widgets/generic_app_bar.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
@@ -39,71 +41,42 @@ class ProductPage extends StatelessWidget {
               right: 0,
               bottom: 0,
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    productImage(context),
-                    productDetails(context, sizedBox),
-                    sectionTitle('Order Quantities'),
-                    UpdateCount(
-                      product: product,
-                      quantity: quantity,
-                      updateOrginalValue: updateQuantityValueFromClass,
-                    ),
-                    sizedBox,
-                    // users reviews sections
-                    sectionTitle('Users Reviews'),
-                    const Column(
-                      children: [
-                        //ReviewCard(review: review),
-                        Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CircleAvatar(
-                                  child: Icon(
-                                    CupertinoIcons.person,
-                                    size: 50,
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text('User Name'),
-                                          Expanded(child: sizedBox),
-                                          RatingBar.readOnly(
-                                            filledIcon:
-                                                CupertinoIcons.heart_fill,
-                                            emptyIcon: CupertinoIcons.heart,
-                                            size: 28,
-                                            initialRating: 3.5,
-                                            maxRating: 5,
-                                            filledColor: Colors.black87,
-                                            emptyColor: Colors.black12,
-                                          ),
-                                        ],
-                                      ),
-                                      sizedBox,
-                                      Text(
-                                          'Commodi quam quo nulla id veritatis non. Totam unde qui molestias consequatur hic repellendus odio. Tenetur aliquid officiis consectetur. Reiciendis porro aut. Libero qui incidunt nemo at corporis et. Dolorem dolores facere optio non optio modi.'),
-                                    ],
-                                  ),
-                                )
-                              ],
+                child: FutureBuilder<List<UserRatingModel>>(
+                    future: getProductReivews(productId: product.id),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                          children: [
+                            productImage(context),
+                            productDetails(context, sizedBox),
+                            sectionTitle('Order Quantities'),
+                            UpdateCount(
+                              product: product,
+                              quantity: quantity,
+                              updateOrginalValue: updateQuantityValueFromClass,
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 70),
-                  ],
-                ),
+                            sizedBox,
+                            // users reviews sections
+                            sectionTitle('Users Reviews'),
+                            snapshot.data!.isNotEmpty
+                                ? Column(
+                                    children: snapshot.data!
+                                        .map((review) =>
+                                            ReviewCard(review: review))
+                                        .toList(),
+                                  )
+                                : const Padding(
+                                    padding: EdgeInsets.all(30),
+                                    child:
+                                        Text('There is no reivews unitl now!'),
+                                  ),
+                            const SizedBox(height: 70),
+                          ],
+                        );
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    }),
               ),
             ),
             // add to cart button
@@ -200,11 +173,11 @@ class ProductPage extends StatelessWidget {
   Row starsRatingAndAddReview(BuildContext context) {
     return Row(
       children: [
-        const RatingBar.readOnly(
+        RatingBar.readOnly(
           filledIcon: CupertinoIcons.heart_fill,
           emptyIcon: CupertinoIcons.heart,
           size: 28,
-          initialRating: 3.5,
+          initialRating: controller.productRating.value,
           maxRating: 5,
           filledColor: Colors.black87,
           emptyColor: Colors.black12,

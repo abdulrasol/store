@@ -16,7 +16,7 @@ import 'user_adress_list.dart';
 import 'orders.dart';
 
 class Options extends StatelessWidget {
-  Options({Key? key});
+  Options({super.key});
   final controller = Get.put(Controller());
 
   @override

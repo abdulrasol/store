@@ -22,7 +22,9 @@ Future<QuerySnapshot> getProducts() async {
 Future<List<ProdectModel>> getProductsList() async {
   final products = await productsCollection.get();
   return products.docs.map((e) {
-    return ProdectModel.fromMap(e.data() as Map<String, dynamic>);
+    var prodectData = e.data() as Map<String, dynamic>;
+    prodectData['id'] = e.id;
+    return ProdectModel.fromMap(prodectData);
   }).toList();
 }
 
@@ -124,13 +126,40 @@ Future<String?> deleteCartItem(String id) async {
 Future<int?> addReview(UserRatingModel reivew) async {
   try {
     await FirebaseFirestore.instance
-        .collection('reviews')
-        .doc(reivew.productId)
-        .set(
-          reivew.toMap(),
-        );
+        .collection('items') // Top-level collection
+        .doc(reivew.productId) // Document ID
+        .collection('reviews') // Subcollection name
+        .doc(reivew.timestamp) // Add ID from time span
+        .set(reivew.toMap()); // Add the document data
   } on Exception {
     return 1;
   }
   return 0;
+}
+
+// get product reivews
+Future<List<UserRatingModel>> getProductReivews(
+    {required String productId}) async {
+  final app = await FirebaseFirestore.instance
+      .collection('items') // Top-level collection
+      .doc(productId) // Document ID
+      .collection('reviews')
+      .get(); // Subcollection name
+  //print(app.docs.length);
+
+  if (app.size == 0) {
+    // No reviews, return a default value or handle accordingly
+    controller.productRating.value = 0;
+  }
+
+  double sumRatings = 0.0;
+  for (QueryDocumentSnapshot documentSnapshot in app.docs) {
+    final Map<String, dynamic> data =
+        documentSnapshot.data() as Map<String, dynamic>;
+    final double rating = data['rating'] as double;
+    sumRatings += rating;
+    controller.productRating.value = sumRatings / app.size;
+  }
+
+  return app.docs.map((e) => UserRatingModel.fromMap(e.data())).toList();
 }

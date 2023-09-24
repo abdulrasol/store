@@ -22,20 +22,20 @@ class ReviewCard extends StatelessWidget {
                 size: 50,
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Text(review.user['name']),
+                      Text(review.user['user_name']),
                       const Expanded(child: sizedBox),
-                      const RatingBar.readOnly(
+                      RatingBar.readOnly(
                         filledIcon: CupertinoIcons.heart_fill,
                         emptyIcon: CupertinoIcons.heart,
                         size: 28,
-                        initialRating: 2.5,
+                        initialRating: review.rating,
                         maxRating: 5,
                         filledColor: Colors.black87,
                         emptyColor: Colors.black12,

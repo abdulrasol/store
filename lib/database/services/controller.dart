@@ -14,6 +14,7 @@ class Controller extends GetxController {
   RxList<CategoryModel> categories = <CategoryModel>[].obs;
   RxList<SlideModel> sliders = <SlideModel>[].obs;
   RxDouble totalPrice = 1.0.obs;
+  RxDouble productRating = 0.0.obs;
   Rx<User?> user = Rx<User?>(null);
   Rx<UserModel> userData = Rx<UserModel>(UserModel(profileImage: ''));
 
