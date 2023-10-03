@@ -1,21 +1,15 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:store/database/models/prodect_model.dart';
-import 'package:store/ui/pages/product.dart';
-
-import '../../database/services/controller.dart';
-import 'small_widget.dart';
+import 'package:store/database/models/item_model.dart';
+import 'package:store/ui/pages/item.dart';
 
 class ProductCart extends StatelessWidget {
-  final ProdectModel product;
-  const ProductCart({super.key, required this.product});
+  final ItemModel item;
+  const ProductCart({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(Controller());
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5.0),
@@ -24,13 +18,12 @@ class ProductCart extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
-          Get.to(() => ProductPage(product: product));
+          Get.to(() => const ItemPage());
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SizedBox(
             width: 120,
-            height: 190,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,8 +31,8 @@ class ProductCart extends StatelessWidget {
                 SizedBox(
                   height: 120,
                   child: Center(
-                    child: Image.memory(
-                      base64.decode(product.image),
+                    child: Image.asset(
+                      item.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -52,7 +45,7 @@ class ProductCart extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${product.price}\$",
+                          "${item.price}\$",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -60,7 +53,7 @@ class ProductCart extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          product.name,
+                          item.name,
                           style: const TextStyle(fontWeight: FontWeight.w600),
                         )
                       ],
@@ -73,17 +66,13 @@ class ProductCart extends StatelessWidget {
                             MaterialStateProperty.all(Colors.white),
                         elevation: MaterialStateProperty.all(2),
                         minimumSize:
-                            MaterialStateProperty.all(const Size(35, 35)),
+                            MaterialStateProperty.all(const Size(40, 40)),
                         maximumSize:
-                            MaterialStateProperty.all(const Size(35, 35)),
+                            MaterialStateProperty.all(const Size(40, 40)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0))),
+                            borderRadius: BorderRadius.circular(15.0))),
                       ),
-                      onPressed: () {
-                        if (controller.user.value == null) {
-                          logingCheckingSnakBar;
-                        }
-                      },
+                      onPressed: () {},
                       child: const Center(child: Icon(CupertinoIcons.plus)),
                     ),
                   ],
@@ -95,62 +84,4 @@ class ProductCart extends StatelessWidget {
       ),
     );
   }
-}
-
-// shimor
-Widget productCartShimmer() {
-  return Card(
-    child: SizedBox(
-      width: 146,
-      height: 190,
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey[200]!,
-        highlightColor: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 134,
-                height: 120,
-                child: CircleAvatar(
-                  radius: double.infinity,
-                  backgroundColor: Colors.grey[200],
-                ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        color: Colors.grey[200],
-                        height: 10,
-                        width: 40,
-                      ),
-                      const SizedBox(height: 5),
-                      Container(
-                        color: Colors.grey[200],
-                        height: 10,
-                        width: 70,
-                      ),
-                    ],
-                  ),
-                  Container(
-                    color: Colors.grey[200],
-                    height: 40,
-                    width: 40,
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
 }
