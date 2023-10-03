@@ -23,7 +23,7 @@ Widget homeSectionList(
         ),
       ),
       SizedBox(
-        height: 200,
+        height: 205,
         width: double.infinity,
         // futurebuilder that get products from cloud by items fetchs
         child: Obx(
@@ -54,7 +54,7 @@ Widget homeSectionList(
                         sellUnit: product.sellUnit,
                         quantity: product.quantity,
                         image: product.image,
-                        note: product.note,
+                        description: product.description,
                         increaseAmount: product.increaseAmount,
                         availability: product.availability,
                         priority: product.priority,

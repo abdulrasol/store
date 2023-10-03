@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
+import 'package:store/ui/pages/cart.dart';
 import 'package:store/ui/pages/main.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:store/ui/pages/options.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -12,8 +12,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // Ideal time to initialize
-  //await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+
   runApp(app);
 }
 
@@ -32,4 +31,10 @@ var app = GetMaterialApp(
         ),
       ),
     ),
+    routes: {
+      //'main': (contect) => const Main(),
+      'cart': (contect) => const Cart(),
+      'options': (contect) => Options(),
+    },
+    initialRoute: 'main',
     home: const Main());

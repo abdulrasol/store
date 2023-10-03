@@ -47,6 +47,14 @@ dependencies:
   rating: ^1.0.0-dev.1
   firebase_auth: ^4.7.2
   icons_plus: ^4.0.0
+  current_location: ^0.0.3
+  open_street_map_search_and_pick: ^0.1.0
+  file_picker: ^5.3.4
+  flutter_image_compress: ^2.0.4
+  firebase_storage: ^11.2.6
+  
+  
+  
 
 
 dev_dependencies:

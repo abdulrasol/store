@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:store/database/services/auth.dart';
+import 'package:store/ui/widgets/decoration.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
 
 class AuthPage extends StatefulWidget {
@@ -27,48 +27,6 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    var inputDecoration = InputDecoration(
-      prefixIcon: const Icon(
-        CupertinoIcons.at,
-        color: Colors.black87,
-      ),
-      label: const Text(
-        'Email',
-        style: TextStyle(color: Colors.black87),
-      ),
-      enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(7.0)),
-      ),
-      focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 2,
-        ),
-        borderRadius: BorderRadius.all(
-          Radius.circular(10.0),
-        ),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.red.shade300,
-          width: 1,
-        ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10.0),
-        ),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.red.shade300,
-          width: 2,
-        ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(7.0),
-        ),
-      ),
-    );
     shownForm = loginForm(inputDecoration);
     return Scaffold(
       appBar: genericAppBar(
@@ -192,7 +150,12 @@ class _AuthPageState extends State<AuthPage> {
                 if (login != null) {
                   setState(() {
                     state = login;
+                    btnController.error();
                   });
+                } else {
+                  btnController.success();
+                  Future.delayed(const Duration(milliseconds: 500));
+                  Get.back();
                 }
               } else {
                 btnController.error();
@@ -446,6 +409,8 @@ class _AuthPageState extends State<AuthPage> {
                     state = login;
                     btnController.reset();
                   });
+                } else {
+                  Get.back<bool>();
                 }
               } else {
                 btnController.error();
