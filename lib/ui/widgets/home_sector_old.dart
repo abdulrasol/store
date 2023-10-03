@@ -49,7 +49,7 @@ Widget homeSection(
                           sellUnit: product.sellUnit,
                           quantity: product.quantity,
                           image: product.image,
-                          description: product.description,
+                          note: product.note,
                           increaseAmount: product.increaseAmount,
                           availability: product.availability,
                           priority: product.priority,

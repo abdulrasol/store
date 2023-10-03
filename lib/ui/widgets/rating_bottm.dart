@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rating/rating.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:store/database/models/rating_model.dart';
-import 'package:store/database/services/items.dart';
 
 class PrintRatingController extends RatingController {
   PrintRatingController(RatingModel ratingModel) : super(ratingModel);
@@ -24,97 +22,81 @@ class PrintRatingController extends RatingController {
   }
 }
 
-Widget ratingBottomSheet(String productName, String productId, Map user) {
+Widget ratingBottomSheet(String product) {
   final textEditController = TextEditingController();
   final btnController = RoundedLoadingButtonController();
   const sizedBox = SizedBox(height: 10);
-  final GlobalKey<FormState> key = GlobalKey<FormState>();
-  double rating = 1;
 
-  return Form(
-    key: key,
-    child: Container(
-      // Add your bottom sheet content here
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('Rate and tell us your review about $productName'),
-          sizedBox,
-          SizedBox(
-            width: double.infinity,
-            child: Center(
-              child: RatingBar(
-                filledIcon: CupertinoIcons.heart_fill,
-                emptyIcon: CupertinoIcons.heart,
-                alignment: Alignment.center,
-                //isHalfAllowed: true,
-                initialRating: rating,
-                maxRating: 5,
-                filledColor: Colors.black87,
-                emptyColor: Colors.black12,
-                onRatingChanged: (value) {
-                  rating = value;
-                },
-              ),
-            ),
-          ),
-          sizedBox,
-          TextField(
-            decoration: InputDecoration(
-              label: const Text(
-                'wirte your review here',
-                style: TextStyle(color: Colors.black87),
-              ),
-              border: OutlineInputBorder(
-                borderRadius:
-                    BorderRadius.circular(10.0), // Set the border radius here
-                borderSide: const BorderSide(
-                    color: Colors.black87,
-                    width: 2.0), // Set the border color and width here
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                    10.0), // Set the border radius for the focused state
-                borderSide: const BorderSide(
-                    color: Colors.black87,
-                    width:
-                        2.0), // Set the border color and width for the focused state
-              ),
-              focusColor: Colors.black87,
-            ),
-            controller: textEditController,
-            maxLines: 5,
-          ),
+  return Container(
+    // Add your bottom sheet content here
+    padding: const EdgeInsets.all(16.0),
 
-          sizedBox,
-          RoundedLoadingButton(
-              controller: btnController,
-              color: Colors.black87,
-              successColor: Colors.green,
-              onPressed: () async {
-                if (key.currentState!.validate()) {
-                  DateTime now = DateTime.now();
-                  await addReview(
-                    UserRatingModel(
-                      productId: productId,
-                      user: user,
-                      reviewText: textEditController.text,
-                      rating: rating,
-                      timestamp: now.millisecondsSinceEpoch.toString(),
-                    ),
-                  );
-                }
-
-                btnController.success();
-                await Future.delayed(const Duration(seconds: 3));
-
-                Get.back();
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text('Rate and tell us your review about $product'),
+        sizedBox,
+        SizedBox(
+          width: double.infinity,
+          child: Center(
+            child: RatingBar(
+              filledIcon: CupertinoIcons.heart_fill,
+              emptyIcon: CupertinoIcons.heart,
+              alignment: Alignment.center,
+              //isHalfAllowed: true,
+              initialRating: 1,
+              maxRating: 5,
+              filledColor: Colors.black87,
+              emptyColor: Colors.black12,
+              onRatingChanged: (value) {
+                debugPrint('$value');
               },
-              child: const Text('submet'))
-          // Add more widgets as needed
-        ],
-      ),
+            ),
+          ),
+        ),
+        sizedBox,
+        TextField(
+          decoration: InputDecoration(
+            label: const Text(
+              'wirte your review here',
+              style: TextStyle(color: Colors.black87),
+            ),
+            border: OutlineInputBorder(
+              borderRadius:
+                  BorderRadius.circular(10.0), // Set the border radius here
+              borderSide: const BorderSide(
+                  color: Colors.black87,
+                  width: 2.0), // Set the border color and width here
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+                  10.0), // Set the border radius for the focused state
+              borderSide: const BorderSide(
+                  color: Colors.black87,
+                  width:
+                      2.0), // Set the border color and width for the focused state
+            ),
+            focusColor: Colors.black87,
+          ),
+          controller: textEditController,
+          maxLines: 5,
+        ),
+
+        sizedBox,
+        RoundedLoadingButton(
+            controller: btnController,
+            color: Colors.black87,
+            successColor: Colors.green,
+            onPressed: () async {
+              await Future.delayed(const Duration(seconds: 3));
+              btnController.success();
+              await Future.delayed(const Duration(seconds: 3));
+
+              Get.back();
+            },
+            child: const Text('submet'))
+        // Add more widgets as needed
+      ],
     ),
   );
 }

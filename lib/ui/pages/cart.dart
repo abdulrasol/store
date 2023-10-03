@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:store/database/models/item_card.dart';
+import 'package:store/database/models/prodect_model.dart';
 import 'package:store/database/services/controller.dart';
-import 'package:store/database/services/items.dart';
 import 'package:store/ui/pages/auth_page.dart';
 import 'package:store/ui/widgets/cart_item_widget.dart';
 import 'package:store/ui/widgets/page_title.dart';
@@ -18,10 +18,22 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final controller = Get.put(Controller());
-  int? updateView() {
-    setState(() {});
-    return null;
-  }
+  final CartItem item = CartItem(
+    ProdectModel(
+      id: 'id',
+      name: 'name',
+      price: 12,
+      category: 'category',
+      sellUnit: 'sellUnit',
+      quantity: 1,
+      image: 'assets/imgs/item2.png',
+      note: 'description',
+      increaseAmount: 1,
+      availability: true,
+      priority: 1,
+    ),
+    2,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -40,40 +52,11 @@ class _CartState extends State<Cart> {
                       ],
                     ),
                   )
-                : Expanded(
-                    child: StreamBuilder<List<CartItemModel>>(
-                      stream: cartItemsStream,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (snapshot.hasError) {
-                          return const Placeholder();
-                        } else if (snapshot.hasData) {
-                          final cartItems = snapshot.data!;
-                          if (cartItems.isEmpty) {
-                            return const Center(
-                              child: Text('No items in the cart.'),
-                            );
-                          }
-                          return ListView.builder(
-                            itemCount: cartItems.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final item = cartItems[index];
-                              return CartItemWidget(
-                                item: item,
-                                updateView: updateView,
-                              );
-                            },
-                          );
-                        } else {
-                          return const Center(
-                            child: Text('No data available.'),
-                          );
-                        }
-                      },
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        CartItemWidget(item: item),
+                      ],
                     ),
                   ),
           )

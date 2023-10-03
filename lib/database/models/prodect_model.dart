@@ -6,7 +6,7 @@ class ProdectModel {
   final String sellUnit;
   final double quantity;
   final String image;
-  final String description;
+  final String note;
   final double increaseAmount;
   final bool availability;
   final double priority;
@@ -19,7 +19,7 @@ class ProdectModel {
     required this.sellUnit,
     required this.quantity,
     required this.image,
-    required this.description,
+    required this.note,
     required this.increaseAmount,
     required this.availability,
     required this.priority,
@@ -34,7 +34,7 @@ class ProdectModel {
       'sellUnit': sellUnit,
       'quantity': quantity,
       'image': image,
-      'description': description,
+      'description': note,
       'increaseAmount': increaseAmount,
       'availability': availability,
       'priority': priority,
@@ -50,7 +50,7 @@ class ProdectModel {
       sellUnit: map['sellUnit'],
       quantity: map['quantity'],
       image: map['image'],
-      description: map['description'],
+      note: map['note'],
       increaseAmount: map['increaseAmount'],
       availability: map['availability'],
       priority: map['priority'],

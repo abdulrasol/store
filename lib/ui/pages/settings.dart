@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
 
-class Prfile extends StatelessWidget {
-  const Prfile({super.key});
+class Options extends StatelessWidget {
+  const Options({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: genericAppBar(
-          title: 'My Profile',
+          title: 'Settings',
           withBackAction: true,
           centerTitle: true,
           showSearchIcon: false,

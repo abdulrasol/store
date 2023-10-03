@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:store/ui/pages/cart.dart';
 import 'package:store/ui/pages/categories.dart';
 import 'package:store/ui/pages/home.dart';
-import 'package:store/ui/pages/options.dart';
+import 'package:store/ui/pages/more.dart';
 
 class Main extends StatefulWidget {
   const Main({super.key});
@@ -20,7 +19,7 @@ class _MainState extends State<Main> {
     const Home(),
     const Categories(),
     const Cart(),
-    Options(),
+    More(),
   ];
 
   @override
@@ -44,7 +43,7 @@ class _MainState extends State<Main> {
               unselectedColor: Colors.black54,
               selectedColor: Colors.black87),
           SalomonBottomBarItem(
-            icon: const Icon(Bootstrap.cart),
+            icon: const Icon(CupertinoIcons.cart),
             title: const Text('Cart'),
             unselectedColor: Colors.black54,
             selectedColor: Colors.black87,
