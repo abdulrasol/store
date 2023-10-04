@@ -4,7 +4,7 @@ import 'package:store/database/models/item_card.dart';
 import 'package:store/database/services/controller.dart';
 import 'package:store/database/services/items.dart';
 import 'package:store/ui/pages/auth_page.dart';
-import 'package:store/ui/pages/order.dart';
+import 'package:store/ui/pages/order1.dart';
 import 'package:store/ui/widgets/cart_item_widget.dart';
 import 'package:store/ui/widgets/page_title.dart';
 
