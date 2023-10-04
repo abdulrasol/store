@@ -4,6 +4,7 @@ import 'package:store/database/models/item_card.dart';
 import 'package:store/database/services/controller.dart';
 import 'package:store/database/services/items.dart';
 import 'package:store/ui/pages/auth_page.dart';
+import 'package:store/ui/pages/order.dart';
 import 'package:store/ui/widgets/cart_item_widget.dart';
 import 'package:store/ui/widgets/page_title.dart';
 
@@ -76,12 +77,13 @@ class _CartState extends State<Cart> {
                       },
                     ),
                   ),
-          )
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           if (controller.user.value != null) {
+            Get.to(() => const Order());
           } else {
             Get.to(() => const AuthPage());
           }
@@ -92,6 +94,7 @@ class _CartState extends State<Cart> {
         hoverColor: Colors.black54,
         //tooltip: 'Compelete order',
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

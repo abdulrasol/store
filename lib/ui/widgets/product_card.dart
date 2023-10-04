@@ -88,6 +88,7 @@ class ProductCart extends StatelessWidget {
                         if (adding == null) {
                           btnController.success();
                         } else {
+                          btnController.error();
                           showloginRequiredAlert();
                         }
                       },

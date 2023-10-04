@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:store/database/models/item_card.dart';
 import 'package:store/database/models/prodect_model.dart';
 import 'package:store/database/models/rating_model.dart';
@@ -74,7 +75,7 @@ class ProductPage extends StatelessWidget {
                           ],
                         );
                       } else {
-                        return const Center(child: CircularProgressIndicator());
+                        return productPageShimmer(context);
                       }
                     }),
               ),
@@ -95,7 +96,7 @@ class ProductPage extends StatelessWidget {
                         onPressed: () async {
                           // to check if user was loging in before or not!
                           if (controller.user.value == null) {
-                            logingCheckingSnakBar;
+                            showloginRequiredAlert();
                             btnController.reset();
                           } else {
                             var adding = await addCartToCart(CartItemModel(
@@ -327,4 +328,117 @@ class _UpdateCountState extends State<UpdateCount> {
       ],
     );
   }
+}
+
+Widget productPageShimmer(context) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Shimmer.fromColors(
+      baseColor: Colors.grey[200]!,
+      highlightColor: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            foregroundColor: Colors.grey[200],
+            radius: MediaQuery.of(context).size.height / 5,
+          ),
+          const SizedBox(height: 20),
+          Container(
+            width: MediaQuery.of(context).size.width / 2,
+            height: 20,
+            color: Colors.grey[200],
+          ),
+          const SizedBox(height: 20),
+          Container(
+            width: MediaQuery.of(context).size.width / 3,
+            height: 20,
+            color: Colors.grey[200],
+          ),
+          const SizedBox(height: 20),
+          Container(
+            width: MediaQuery.of(context).size.width / 1.5,
+            height: 20,
+            color: Colors.grey[200],
+          ),
+          const SizedBox(height: 30),
+          Container(
+            width: MediaQuery.of(context).size.width - 50,
+            height: 20,
+            color: Colors.grey[200],
+          ),
+          const SizedBox(height: 15),
+          Container(
+            width: MediaQuery.of(context).size.width - 70,
+            height: 20,
+            color: Colors.grey[200],
+          ),
+          const SizedBox(height: 15),
+          Container(
+            width: MediaQuery.of(context).size.width - 100,
+            height: 20,
+            color: Colors.grey[200],
+          ),
+          const SizedBox(height: 30),
+          SizedBox(
+            //color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    foregroundColor: Colors.grey[200],
+                    child: const Icon(
+                      CupertinoIcons.person,
+                      size: 50,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 100,
+                              height: 20,
+                              color: Colors.grey[200],
+                            ),
+                            const Expanded(child: sizedBox),
+                            const RatingBar.readOnly(
+                              filledIcon: CupertinoIcons.heart_fill,
+                              emptyIcon: CupertinoIcons.heart,
+                              size: 28,
+                              initialRating: 3,
+                              maxRating: 5,
+                              filledColor: Colors.black87,
+                              emptyColor: Colors.black12,
+                            ),
+                          ],
+                        ),
+                        sizedBox,
+                        Container(
+                          width: 100,
+                          height: 20,
+                          color: Colors.grey[200],
+                        ),
+                        Container(
+                          width: 100,
+                          height: 20,
+                          color: Colors.grey[200],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    ),
+  );
 }
