@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:icons_plus/icons_plus.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:store/database/models/user_adress_model.dart';
 import 'package:store/database/services/auth.dart';
 import 'package:store/database/services/controller.dart';
@@ -19,6 +21,7 @@ class Order extends StatefulWidget {
 class _OrderState extends State<Order> {
   final controller = Get.put(Controller());
   final controllerText = TextEditingController();
+  final btnController = RoundedLoadingButtonController();
   final high = const SizedBox(height: 15);
 
   @override
@@ -91,14 +94,18 @@ class _OrderState extends State<Order> {
                     controller: controllerText,
                   ),
                 ),
-                TextButton.icon(
-                  icon: const Icon(Icons.done),
-                  onPressed: () {
-                    Get.to(() => const UserAddressList())?.then((value) {
-                      setState(() {});
-                    });
-                  },
-                  label: const Text('apply'),
+                const SizedBox(width: 25),
+                RoundedLoadingButton(
+                  width: 150,
+                  controller: btnController,
+                  onPressed: (() {}),
+                  child: const Row(
+                    children: [
+                      Text('Apply'),
+                      SizedBox(width: 15),
+                      Icon(Iconsax.information),
+                    ],
+                  ),
                 ),
                 Expanded(child: high),
               ],

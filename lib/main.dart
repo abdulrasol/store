@@ -5,7 +5,7 @@ import 'package:store/ui/pages/cart.dart';
 import 'package:store/ui/pages/main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:store/ui/pages/options.dart';
-import 'package:store/ui/pages/order1.dart';
+import 'package:store/ui/pages/order.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -38,5 +38,5 @@ var app = GetMaterialApp(
     'options': (contect) => Options(),
   },
   initialRoute: 'main',
-  home: const Main(),
+  home: const Order(),
 );
