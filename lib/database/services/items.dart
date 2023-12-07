@@ -121,6 +121,21 @@ Future<String?> deleteCartItem(String id) async {
   }
 }
 
+// add total price in card
+
+Future calculateTotalPrice() async {
+  controller.totalPrice.value = 0;
+  controller.discount.value = 0;
+  var cart = await FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('cart')
+      .get();
+  for (var element in cart.docs) {
+    controller.totalPrice.value += element['price'] * element['quantity'];
+  }
+}
+
 // add reivew
 
 Future<int?> addReview(UserRatingModel reivew) async {
