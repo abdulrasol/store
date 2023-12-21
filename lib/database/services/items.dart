@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:store/database/models/item_card.dart';
+import 'package:store/database/models/order_model.dart';
 import 'package:store/database/models/rating_model.dart';
 import 'package:store/database/services/controller.dart';
 
@@ -177,4 +178,39 @@ Future<List<UserRatingModel>> getProductReivews(
   }
 
   return app.docs.map((e) => UserRatingModel.fromMap(e.data())).toList();
+}
+
+// check promocode
+Future getDiscountCode(String code) async {
+  return await FirebaseFirestore.instance
+      .collection('discount_code')
+      .where("code", isEqualTo: code)
+      .get()
+      .then((docs) {
+    if (docs.docs.isEmpty) {
+      return null;
+    }
+    return docs.docs.first.data();
+  });
+}
+
+// compelte order
+Future compelteOrder(OrderModel order) async {
+  await FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('orders')
+      .add(order.toMap());
+  await FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('cart')
+      .get()
+      .then(
+        (value) => value.docs.map(
+          (e) => e.reference.delete(),
+        ),
+      );
+  controller.totalPrice.value = 0;
+  controller.discount.value = 0;
 }

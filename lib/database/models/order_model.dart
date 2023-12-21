@@ -1,20 +1,41 @@
-import 'package:store/database/models/item_card.dart';
-import 'package:store/database/models/user_adress_model.dart';
-
 class OrderModel {
-  final String userId;
-  final List<CartItemModel> items;
+  final String id;
+  final List items;
   final String timestamp;
-  final UserAdressModel adress;
   final double price;
+  final double discount;
   final String state;
+  final Map address;
 
   OrderModel({
-    required this.userId,
+    required this.id,
     required this.items,
     required this.timestamp,
-    required this.adress,
     required this.price,
+    required this.discount,
     required this.state,
+    required this.address,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'items': items,
+      'timestamp': timestamp,
+      'price': price,
+      'state': state,
+      'address': address
+    };
+  }
+
+  static OrderModel fromMap(Map<String, dynamic> map) {
+    return OrderModel(
+        id: map['id'],
+        items: map['items'],
+        timestamp: map['timestamp'],
+        discount: map['discount'],
+        price: map['price'],
+        state: map['state'],
+        address: map['address']);
+  }
 }

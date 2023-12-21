@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:store/database/models/item_card.dart';
+import 'package:store/database/models/order_model.dart';
 import 'package:store/database/models/user_adress_model.dart';
 import 'package:store/database/services/auth.dart';
 import 'package:store/database/services/controller.dart';
@@ -23,9 +25,11 @@ class _OrderState extends State<Order> {
   final controller = Get.put(Controller());
   final controllerText = TextEditingController();
   final btnController = RoundedLoadingButtonController();
+  final flaotBtnController = RoundedLoadingButtonController();
   final high = const SizedBox(height: 15);
   late UserAdressModel shoppingAdress;
   late double totalPrice;
+  // late List totalPrice;
 
   final dataCell = DataCell(
     Shimmer.fromColors(
@@ -44,6 +48,7 @@ class _OrderState extends State<Order> {
   @override
   Widget build(BuildContext context) {
     totalPrice = controller.totalPrice.value;
+
     return Scaffold(
       appBar: genericAppBar(
         context: context,
@@ -73,10 +78,10 @@ class _OrderState extends State<Order> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
+      /*  floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
           if (controller.user.value != null) {
-            // Handle the order completion logic here
+            
           } else {
             Get.to(() => const AuthPage());
           }
@@ -87,6 +92,31 @@ class _OrderState extends State<Order> {
         hoverColor: Colors.black54,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    
+    */
+      floatingActionButton: RoundedLoadingButton(
+        controller: flaotBtnController,
+        onPressed: () async {
+          if (controller.user.value != null) {
+            await compelteOrder(
+              OrderModel(
+                id: 'id',
+                items:
+                    controller.cart.map((element) => element.toMap()).toList(),
+                timestamp: DateTime.now().toIso8601String(),
+                price: controller.totalPrice(),
+                discount: controller.discount.value,
+                state: 'order',
+                address: controller.userAdressModel.value.toMap(),
+              ),
+            );
+          } else {
+            Get.to(() => const AuthPage());
+          }
+        },
+        color: Colors.black87,
+        child: const Text('Confirm order'),
+      ),
     );
   }
 
@@ -195,7 +225,7 @@ class _OrderState extends State<Order> {
                 children: [
                   const Text('Items Prices: '),
                   const Expanded(child: SizedBox()),
-                  Obx(() => Text(controller.totalPrice.toStringAsFixed(2))),
+                  Text(controller.totalPrice.toStringAsFixed(2)),
                 ],
               ),
               high,
@@ -212,7 +242,14 @@ class _OrderState extends State<Order> {
                   SizedBox(
                     width: 150,
                     child: TextFormField(
+                      decoration:
+                          const InputDecoration(label: Text('Discount code')),
                       controller: controllerText,
+                      onChanged: ((value) {
+                        if (controller.discount.value == 0) {
+                          btnController.reset();
+                        }
+                      }),
                     ),
                   ),
                   const SizedBox(width: 25),
@@ -222,9 +259,40 @@ class _OrderState extends State<Order> {
                     width: 75,
                     controller: btnController,
                     onPressed: () async {
-                      controller.discount.value = 2;
-                      await Future.delayed(const Duration(seconds: 1));
-                      btnController.success();
+                      var code = await getDiscountCode(controllerText.text);
+                      if (code == null) {
+                        btnController.error();
+                        Get.defaultDialog(
+                          backgroundColor: Colors.grey.shade300,
+                          title: 'code doesn\'t macth!',
+                          titlePadding: const EdgeInsets.all(15),
+                          //confirm: Icon(FontAwesome.truck),
+                          content: const Icon(
+                            Bootstrap.x_circle,
+                            size: 50,
+                          ),
+                        );
+                      } else if (code['discount'] >
+                          controller.totalPrice.value) {
+                        btnController.stop();
+                        Get.defaultDialog(
+                          backgroundColor: Colors.grey.shade300,
+                          title:
+                              'Total price should be more than discount value!',
+                          titlePadding: const EdgeInsets.all(15),
+                          //confirm: Icon(FontAwesome.truck),
+                          content: const Icon(
+                            Bootstrap.info_circle_fill,
+                            size: 50,
+                          ),
+                        );
+                      } else {
+                        if (code['use count'] <= code['limit']) {
+                          btnController.success();
+                          controller.discount.value = code['discount'];
+                        }
+                      }
+                      //btnController.success();
                     },
                     child: const Text('Apply'),
                   ),
@@ -248,8 +316,8 @@ class _OrderState extends State<Order> {
                 children: [
                   const Text('Total Price: '),
                   const Expanded(child: SizedBox()),
-                  Obx(() => Text((totalPrice - controller.discount.value)
-                      .toStringAsFixed(2))),
+                  Obx(() =>
+                      Text((controller.totalPrice.value).toStringAsFixed(2))),
                 ],
               ),
             ],
@@ -304,6 +372,7 @@ class _OrderState extends State<Order> {
               future: getCartItems(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                  controller.cart.value = snapshot.data!;
                   return DataTable(
                     columns: const [
                       DataColumn(label: Text('Item')),
