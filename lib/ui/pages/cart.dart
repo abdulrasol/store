@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:store/database/models/item_card.dart';
 import 'package:store/database/services/controller.dart';
 import 'package:store/database/services/items.dart';
-import 'package:store/ui/pages/auth_page.dart';
+
 import 'package:store/ui/pages/order.dart';
 import 'package:store/ui/widgets/cart_item_widget.dart';
 import 'package:store/ui/widgets/page_title.dart';
@@ -19,6 +20,7 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final controller = Get.put(Controller());
+  var isCartEmpty = false;
   int? updateView() {
     setState(() {});
     return null;
@@ -55,6 +57,7 @@ class _CartState extends State<Cart> {
                         } else if (snapshot.hasData) {
                           final cartItems = snapshot.data!;
                           if (cartItems.isEmpty) {
+                            isCartEmpty = true;
                             return const Center(
                               child: Text('No items in the cart.'),
                             );
@@ -83,13 +86,26 @@ class _CartState extends State<Cart> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           if (controller.user.value != null) {
-            await calculateTotalPrice();
-            Get.to(() => const Order());
-          } else {
-            Get.to(() => const AuthPage());
+            if (isCartEmpty) {
+              print(isCartEmpty);
+              Get.defaultDialog(
+                backgroundColor: Colors.grey.shade300,
+                title: 'Your cart is empty!',
+                titlePadding: const EdgeInsets.all(15),
+                //confirm: Icon(FontAwesome.truck),
+                content: const Icon(
+                  Bootstrap.exclamation_circle,
+                  size: 50,
+                ),
+              );
+            } else {
+              await calculateItemsPrice();
+              Get.to(() => const Order());
+            }
           }
         },
-        label: Text(controller.user.value != null ? 'Order' : 'Login'),
+        label: Text(
+            controller.user.value != null ? 'Order' : 'Shuold login first!'),
         backgroundColor: Colors.black87,
         focusColor: Colors.black54,
         hoverColor: Colors.black54,

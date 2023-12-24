@@ -28,8 +28,6 @@ class _OrderState extends State<Order> {
   final flaotBtnController = RoundedLoadingButtonController();
   final high = const SizedBox(height: 15);
   late UserAdressModel shoppingAdress;
-  late double totalPrice;
-  // late List totalPrice;
 
   final dataCell = DataCell(
     Shimmer.fromColors(
@@ -47,8 +45,8 @@ class _OrderState extends State<Order> {
 
   @override
   Widget build(BuildContext context) {
-    totalPrice = controller.totalPrice.value;
-
+    controller.totalPrice.value =
+        controller.itemsPrices.value + controller.shoppingPrice.value;
     return Scaffold(
       appBar: genericAppBar(
         context: context,
@@ -78,27 +76,11 @@ class _OrderState extends State<Order> {
           ),
         ),
       ),
-      /*  floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          if (controller.user.value != null) {
-            
-          } else {
-            Get.to(() => const AuthPage());
-          }
-        },
-        label: const Text('Confirm order'),
-        backgroundColor: Colors.black87,
-        focusColor: Colors.black54,
-        hoverColor: Colors.black54,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    
-    */
       floatingActionButton: RoundedLoadingButton(
         controller: flaotBtnController,
         onPressed: () async {
           if (controller.user.value != null) {
-            await compelteOrder(
+            bool order = await compelteOrder(
               OrderModel(
                 id: 'id',
                 items:
@@ -110,6 +92,21 @@ class _OrderState extends State<Order> {
                 address: controller.userAdressModel.value.toMap(),
               ),
             );
+
+            if (order) {
+              Get.defaultDialog(
+                backgroundColor: Colors.grey.shade300,
+                title: 'Your order has been confirmed!',
+                titlePadding: const EdgeInsets.all(15),
+                //confirm: Icon(FontAwesome.truck),
+                content: const Icon(
+                  BoxIcons.bx_check_circle,
+                  size: 50,
+                ),
+              );
+              await Future.delayed(const Duration(seconds: 2));
+              Get.back();
+            }
           } else {
             Get.to(() => const AuthPage());
           }
@@ -225,7 +222,7 @@ class _OrderState extends State<Order> {
                 children: [
                   const Text('Items Prices: '),
                   const Expanded(child: SizedBox()),
-                  Text(controller.totalPrice.toStringAsFixed(2)),
+                  Text(controller.itemsPrices.toStringAsFixed(2)),
                 ],
               ),
               high,
@@ -290,6 +287,8 @@ class _OrderState extends State<Order> {
                         if (code['use count'] <= code['limit']) {
                           btnController.success();
                           controller.discount.value = code['discount'];
+                          controller.totalPrice.value -=
+                              controller.discount.value;
                         }
                       }
                       //btnController.success();

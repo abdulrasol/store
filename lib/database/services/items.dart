@@ -124,7 +124,7 @@ Future<String?> deleteCartItem(String id) async {
 
 // add total price in card
 
-Future calculateTotalPrice() async {
+Future calculateItemsPrice() async {
   controller.totalPrice.value = 0;
   controller.discount.value = 0;
   var cart = await FirebaseFirestore.instance
@@ -132,8 +132,9 @@ Future calculateTotalPrice() async {
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection('cart')
       .get();
+  controller.itemsPrices.value = 0;
   for (var element in cart.docs) {
-    controller.totalPrice.value += element['price'] * element['quantity'];
+    controller.itemsPrices.value += element['price'] * element['quantity'];
   }
 }
 
@@ -195,22 +196,30 @@ Future getDiscountCode(String code) async {
 }
 
 // compelte order
-Future compelteOrder(OrderModel order) async {
-  await FirebaseFirestore.instance
-      .collection('users')
-      .doc(FirebaseAuth.instance.currentUser!.uid)
-      .collection('orders')
-      .add(order.toMap());
-  await FirebaseFirestore.instance
-      .collection('users')
-      .doc(FirebaseAuth.instance.currentUser!.uid)
-      .collection('cart')
-      .get()
-      .then(
-        (value) => value.docs.map(
-          (e) => e.reference.delete(),
-        ),
-      );
-  controller.totalPrice.value = 0;
-  controller.discount.value = 0;
+Future<bool> compelteOrder(OrderModel order) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('orders')
+        .add(order.toMap());
+    controller.totalPrice.value = 0;
+    controller.discount.value = 0;
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('cart')
+        .get()
+        .then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        ds.reference.delete();
+      }
+      controller.totalPrice.value = 0;
+      controller.discount.value = 0;
+    });
+
+    return true;
+  } on Exception {
+    return false;
+  }
 }

@@ -16,14 +16,18 @@ class Controller extends GetxController {
   RxList<CategoryModel> categories = <CategoryModel>[].obs;
   RxList<CartItemModel> cart = <CartItemModel>[].obs;
   RxList<SlideModel> sliders = <SlideModel>[].obs;
-  RxDouble totalPrice = 1.0.obs;
-  RxDouble discount = 0.0.obs;
-  RxDouble shoppingPrice = 2.0.obs;
+
   RxDouble productRating = 0.0.obs;
   Rx<User?> user = Rx<User?>(null);
   Rx<UserModel> userData = Rx<UserModel>(UserModel(profileImage: ''));
   Rx<UserAdressModel> userAdressModel = Rx<UserAdressModel>(UserAdressModel(
       id: '', title: '', description: '', latitude: 1, longitude: 1));
+
+// Prices
+  RxDouble totalPrice = 1.0.obs;
+  RxDouble itemsPrices = 1.0.obs;
+  RxDouble discount = 0.0.obs;
+  RxDouble shoppingPrice = 2.0.obs;
 
   Future<void> updateUserData() async {
     await FirebaseFirestore.instance
