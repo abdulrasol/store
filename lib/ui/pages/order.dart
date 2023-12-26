@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:store/database/models/item_card.dart';
 import 'package:store/database/models/order_model.dart';
 import 'package:store/database/models/user_adress_model.dart';
@@ -73,7 +72,10 @@ class _OrderState extends State<Order> {
           if (controller.user.value != null) {
             bool orderProcess = await compelteOrder(
               order = OrderModel(
-                id: 'id',
+                id: DateTime.now()
+                    .millisecondsSinceEpoch
+                    .toString()
+                    .substring(5),
                 items:
                     controller.cart.map((element) => element.toMap()).toList(),
                 timestamp: DateTime.now().toIso8601String(),

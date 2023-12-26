@@ -24,7 +24,8 @@ class OrderModel {
       'timestamp': timestamp,
       'price': price,
       'state': state,
-      'address': address
+      'address': address,
+      'discount': discount,
     };
   }
 

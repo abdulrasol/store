@@ -12,7 +12,7 @@ class Orders extends StatelessWidget {
   Widget build(BuildContext context) {
     const sizebox = SizedBox(height: 8);
     Widget orderCard({
-      required int orderNumer,
+      required String orderNumer,
       required int quantity,
       required date,
       required String state,
@@ -34,7 +34,7 @@ class Orders extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Order Number:$orderNumer'),
+                    Text('Order Number: $orderNumer'),
                     Text('$quantity Product'),
                     Text(date),
                   ],
@@ -83,7 +83,7 @@ class Orders extends StatelessWidget {
                   itemCount: snapshot.data!.length,
                   itemBuilder: ((context, index) => orderCard(
                         order: snapshot.data![index],
-                        orderNumer: 0011,
+                        orderNumer: snapshot.data![index].id,
                         quantity: snapshot.data![index].items.length,
                         date: snapshot.data![index].timestamp.split('T')[0],
                         state: snapshot.data![index].state,

@@ -23,7 +23,7 @@ class OrderView extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              pageTitle('Order 00123'),
+              pageTitle('Order 00${order.id}'),
               const SizedBox(height: 30),
               Wrap(
                 runSpacing: 25,
@@ -77,11 +77,9 @@ class OrderView extends StatelessWidget {
               high,
               Row(
                 children: [
-                  const Text('Order Price: '),
+                  const Text('Discount: '),
                   const Expanded(child: SizedBox()),
-                  Text(
-                    order.price.toStringAsFixed(2),
-                  ),
+                  Text(order.discount.toStringAsFixed(2)),
                 ],
               ),
               high,
@@ -89,15 +87,17 @@ class OrderView extends StatelessWidget {
                 children: [
                   Text('Shipping Price: '),
                   Expanded(child: SizedBox()),
-                  Text('2\$'),
+                  Text('2'),
                 ],
               ),
               high,
               Row(
                 children: [
-                  const Text('Discount: '),
+                  const Text('Order Price: '),
                   const Expanded(child: SizedBox()),
-                  Text('0'),
+                  Text(
+                    order.price.toStringAsFixed(2),
+                  ),
                 ],
               ),
               high,

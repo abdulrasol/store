@@ -38,5 +38,5 @@ var app = GetMaterialApp(
     'options': (contect) => Options(),
   },
   initialRoute: 'main',
-  home: const Orders(),
+  home: const Main(),
 );

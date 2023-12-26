@@ -1,4 +1,6 @@
 // Import the FirebaseFirestore plugin.
+import 'dart:js_util';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -237,11 +239,11 @@ Future<List<OrderModel>> getOrders() async {
         (orders) => orders.docs
             .map(
               (order) => OrderModel(
-                  id: 'id',
+                  id: order.data()['id'],
                   items: order.data()['items'],
                   timestamp: order.data()['timestamp'],
                   price: order.data()['price'],
-                  discount: 1,
+                  discount: order.data()['discount'],
                   state: order.data()['state'],
                   address: order.data()['address']),
             )
