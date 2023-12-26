@@ -223,3 +223,28 @@ Future<bool> compelteOrder(OrderModel order) async {
     return false;
   }
 }
+
+// featch user orders
+Future<List<OrderModel>> getOrders() async {
+  //<List<OrderModel>>
+  return await FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('orders')
+      .orderBy('timestamp', descending: true)
+      .get()
+      .then(
+        (orders) => orders.docs
+            .map(
+              (order) => OrderModel(
+                  id: 'id',
+                  items: order.data()['items'],
+                  timestamp: order.data()['timestamp'],
+                  price: order.data()['price'],
+                  discount: 1,
+                  state: order.data()['state'],
+                  address: order.data()['address']),
+            )
+            .toList(),
+      );
+}

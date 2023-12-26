@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:store/ui/pages/auth_page.dart';
 
 void checkLoginandShowSnakBar() {
@@ -38,3 +39,15 @@ void showloginRequiredAlert() {
     ),
   );
 }
+
+final dataCell = DataCell(
+  Shimmer.fromColors(
+    baseColor: Colors.grey[200]!,
+    highlightColor: Colors.white,
+    child: Container(
+      color: Colors.grey[200],
+      width: 50,
+      height: 20,
+    ),
+  ),
+);

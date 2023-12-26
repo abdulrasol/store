@@ -10,9 +10,11 @@ import 'package:store/database/services/auth.dart';
 import 'package:store/database/services/controller.dart';
 import 'package:store/database/services/items.dart';
 import 'package:store/ui/pages/auth_page.dart';
+import 'package:store/ui/pages/order_view.dart';
 import 'package:store/ui/pages/user_adress_list.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
 import 'package:store/ui/widgets/page_title.dart';
+import 'package:store/ui/widgets/small_widget.dart';
 
 class Order extends StatefulWidget {
   const Order({Key? key}) : super(key: key);
@@ -28,18 +30,6 @@ class _OrderState extends State<Order> {
   final flaotBtnController = RoundedLoadingButtonController();
   final high = const SizedBox(height: 15);
   late UserAdressModel shoppingAdress;
-
-  final dataCell = DataCell(
-    Shimmer.fromColors(
-      baseColor: Colors.grey[200]!,
-      highlightColor: Colors.white,
-      child: Container(
-        color: Colors.grey[200],
-        width: 50,
-        height: 20,
-      ),
-    ),
-  );
 
   DataRow getEmptyDataRow() => DataRow(cells: [dataCell, dataCell, dataCell]);
 
@@ -79,21 +69,22 @@ class _OrderState extends State<Order> {
       floatingActionButton: RoundedLoadingButton(
         controller: flaotBtnController,
         onPressed: () async {
+          OrderModel order;
           if (controller.user.value != null) {
-            bool order = await compelteOrder(
-              OrderModel(
+            bool orderProcess = await compelteOrder(
+              order = OrderModel(
                 id: 'id',
                 items:
                     controller.cart.map((element) => element.toMap()).toList(),
                 timestamp: DateTime.now().toIso8601String(),
                 price: controller.totalPrice(),
                 discount: controller.discount.value,
-                state: 'order',
+                state: 'processing',
                 address: controller.userAdressModel.value.toMap(),
               ),
             );
 
-            if (order) {
+            if (orderProcess) {
               Get.defaultDialog(
                 backgroundColor: Colors.grey.shade300,
                 title: 'Your order has been confirmed!',
@@ -103,9 +94,13 @@ class _OrderState extends State<Order> {
                   BoxIcons.bx_check_circle,
                   size: 50,
                 ),
+              ).then(
+                (value) => Get.off(
+                  () => OrderView(
+                    order: order,
+                  ),
+                ),
               );
-              await Future.delayed(const Duration(seconds: 2));
-              Get.back();
             }
           } else {
             Get.to(() => const AuthPage());
@@ -161,21 +156,6 @@ class _OrderState extends State<Order> {
                         },
                       ),
                     ),
-                    /*
-                    DropdownMenu<UserAdressModel>(
-                      width: 320,
-                      initialSelection: snapshot.data![0],
-                      dropdownMenuEntries: snapshot.data!
-                          .map(
-                            (e) => DropdownMenuEntry<UserAdressModel>(
-                              value: e,
-                              label: e.title,
-                              leadingIcon: const Icon(Icons.location_on_sharp),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    */
                     const SizedBox(height: 10),
                     TextButton.icon(
                       icon: const Icon(
