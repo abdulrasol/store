@@ -4,6 +4,7 @@ import 'package:store/database/models/order_model.dart';
 import 'package:store/database/services/items.dart';
 import 'package:store/ui/pages/order_view.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
+import 'package:store/ui/widgets/small_widget.dart';
 
 class Orders extends StatelessWidget {
   const Orders({super.key});
@@ -90,7 +91,7 @@ class Orders extends StatelessWidget {
                         price: snapshot.data![index].price,
                       )));
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return circularProgressIndicator();
             }
           })),
     );

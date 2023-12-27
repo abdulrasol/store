@@ -257,7 +257,6 @@ class _UpdateProfileInfo extends StatelessWidget {
             RoundedLoadingButton(
               borderRadius: 8,
               color: Colors.black87,
-              successColor: Colors.black87,
               errorColor: Colors.red.shade300,
               controller: btnController,
               onPressed: () async {

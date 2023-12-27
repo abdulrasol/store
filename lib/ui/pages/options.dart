@@ -65,23 +65,25 @@ class Options extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: 175,
-      child: CircleAvatar(
-        radius: 75,
-        backgroundColor: Colors.grey,
-        backgroundImage: controller.userData.value.profileImage != ''
-            ? MemoryImage(
-                base64Decode(
-                  controller.userData.value.profileImage,
-                ),
-              )
-            : null,
-        child: controller.user.value == null
-            ? const Icon(
-                CupertinoIcons.person_alt_circle_fill,
-                size: 175,
-                color: Colors.black54,
-              )
-            : null,
+      child: Obx(
+        () => CircleAvatar(
+          radius: 75,
+          backgroundColor: Colors.grey,
+          backgroundImage: controller.userData.value.profileImage != ''
+              ? MemoryImage(
+                  base64Decode(
+                    controller.userData.value.profileImage,
+                  ),
+                )
+              : null,
+          child: controller.user.value == null
+              ? const Icon(
+                  CupertinoIcons.person_alt_circle_fill,
+                  size: 175,
+                  color: Colors.black54,
+                )
+              : null,
+        ),
       ),
     );
   }

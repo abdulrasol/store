@@ -140,7 +140,6 @@ class _AuthPageState extends State<AuthPage> {
           RoundedLoadingButton(
             borderRadius: 8,
             color: Colors.black87,
-            successColor: Colors.black87,
             errorColor: Colors.red.shade300,
             controller: btnController,
             onPressed: () async {
@@ -205,7 +204,6 @@ class _AuthPageState extends State<AuthPage> {
                                 RoundedLoadingButton(
                                   borderRadius: 8,
                                   color: Colors.black87,
-                                  successColor: Colors.black87,
                                   errorColor: Colors.red.shade300,
                                   controller: resetController,
                                   onPressed: () async {
@@ -396,7 +394,6 @@ class _AuthPageState extends State<AuthPage> {
           RoundedLoadingButton(
             borderRadius: 8,
             color: Colors.black87,
-            successColor: Colors.black87,
             errorColor: Colors.red.shade300,
             controller: btnController,
             onPressed: () async {

@@ -7,6 +7,7 @@ import 'package:store/database/services/items.dart';
 import 'package:store/ui/pages/order.dart';
 import 'package:store/ui/widgets/cart_item_widget.dart';
 import 'package:store/ui/widgets/page_title.dart';
+import 'package:store/ui/widgets/small_widget.dart';
 
 import '../widgets/generic_app_bar.dart';
 
@@ -48,9 +49,7 @@ class _CartState extends State<Cart> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return circularProgressIndicator();
                         } else if (snapshot.hasError) {
                           return const Placeholder();
                         } else if (snapshot.hasData) {
@@ -86,7 +85,6 @@ class _CartState extends State<Cart> {
         onPressed: () async {
           if (controller.user.value != null) {
             if (isCartEmpty) {
-              print(isCartEmpty);
               Get.defaultDialog(
                 backgroundColor: Colors.grey.shade300,
                 title: 'Your cart is empty!',
@@ -103,8 +101,10 @@ class _CartState extends State<Cart> {
             }
           }
         },
-        label: Text(
-            controller.user.value != null ? 'Order' : 'Shuold login first!'),
+        label: Obx(
+          () => Text(
+              controller.user.value != null ? 'Order' : 'Shuold login first!'),
+        ),
         backgroundColor: Colors.black87,
         focusColor: Colors.black54,
         hoverColor: Colors.black54,
