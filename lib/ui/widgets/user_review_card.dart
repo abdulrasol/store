@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,17 +12,26 @@ class ReviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //print(review.user);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CircleAvatar(
-              child: Icon(
-                CupertinoIcons.person,
-                size: 50,
-              ),
+            CircleAvatar(
+              radius: 25,
+              backgroundImage: review.user.containsKey('user_image')
+                  ? MemoryImage(
+                      base64Decode(review.user['user_image']),
+                    )
+                  : null,
+              child: review.user.containsKey('user_image')
+                  ? null
+                  : const Icon(
+                      CupertinoIcons.person,
+                      size: 50,
+                    ),
             ),
             const SizedBox(width: 10),
             Expanded(
@@ -29,7 +40,7 @@ class ReviewCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(review.user['user_name']),
+                      Text(review.user['user_name'] ?? ''),
                       const Expanded(child: sizedBox),
                       RatingBar.readOnly(
                         filledIcon: CupertinoIcons.heart_fill,

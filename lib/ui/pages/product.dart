@@ -195,6 +195,7 @@ class ProductPage extends StatelessWidget {
                         return ratingBottomSheet(product.name, product.id, {
                           'user_id': controller.user.value!.uid,
                           'user_name': controller.user.value!.displayName,
+                          'user_image': controller.userData.value.profileImage,
                         });
                       }));
             } else {
