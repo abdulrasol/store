@@ -264,7 +264,7 @@ class _AuthPageState extends State<AuthPage> {
           sizedBox,
           ElevatedButton(
             style: ButtonStyle(
-              elevation: MaterialStateProperty.all(2),
+              elevation: WidgetStateProperty.all(2),
               backgroundColor: MaterialStateProperty.all(Colors.white),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(

@@ -72,7 +72,7 @@ class _UserAddressListState extends State<UserAddressList> {
                                 );
                                 setState(() {});
                               },
-                              icon: const Icon(FontAwesome.pencil),
+                              icon: const Icon(FontAwesome.pencil_solid),
                             ),
                             const SizedBox(width: 15),
                             RoundedLoadingButton(
@@ -114,7 +114,7 @@ class _UserAddressListState extends State<UserAddressList> {
           setState(() {});
         },
         label: const Text(' New Address'),
-        icon: const Icon(FontAwesome.map_location_dot),
+        icon: const Icon(FontAwesome.map_location_dot_solid),
         backgroundColor: Colors.black87,
       ),
     );
