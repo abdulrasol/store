@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:store/database/models/item_card.dart';
 import 'package:store/database/services/items.dart';
 

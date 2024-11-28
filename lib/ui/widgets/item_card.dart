@@ -70,18 +70,18 @@ class ItemCard extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      style: ButtonStyle(
-                        // backgroundColor: MaterialStateProperty.all(color),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                        elevation: MaterialStateProperty.all(2),
-                        minimumSize:
-                            MaterialStateProperty.all(const Size(40, 40)),
-                        maximumSize:
-                            MaterialStateProperty.all(const Size(40, 40)),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0))),
-                      ),
+                      // style: ButtonStyle(
+                      //   // backgroundColor: MaterialStateProperty.all(color),
+                      //   foregroundColor:
+                      //       MaterialStateProperty.all(Colors.white),
+                      //   elevation: MaterialStateProperty.all(2),
+                      //   minimumSize:
+                      //       MaterialStateProperty.all(const Size(40, 40)),
+                      //   maximumSize:
+                      //       MaterialStateProperty.all(const Size(40, 40)),
+                      //   shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(15.0))),
+                      // ),
                       onPressed: () async {
                         /*showSnackbar(
                           'Cart',

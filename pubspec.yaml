@@ -43,15 +43,17 @@ dependencies:
   cloud_firestore: ^5.5.0
   shimmer: ^3.0.0
   custom_rating_bar: ^3.0.0
-  rounded_loading_button: ^2.1.0
-  rating: ^1.0.0-dev.1
+  rounded_loading_button_plus: ^3.0.1
+  #rating: ^1.0.0-dev.1
   firebase_auth: ^5.3.3
   icons_plus: ^5.0.0
-  current_location: ^0.0.3
-  open_street_map_search_and_pick: ^0.1.0
+  # current_location: ^0.0.3
+  # open_street_map_search_and_pick: ^0.1.1
   file_picker: ^8.1.4
   flutter_image_compress: ^2.0.4
   liquid_progress_indicator_v2: ^0.5.0
+  # open_street_map_search_and_pick: ^0.1.1
+  # flutter_map: ^6.1.0
  
 
   

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:store/ui/pages/auth_page.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
 

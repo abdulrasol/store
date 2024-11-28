@@ -7,13 +7,13 @@ import 'package:store/database/models/item_card.dart';
 import 'package:store/database/models/prodect_model.dart';
 import 'package:store/database/models/rating_model.dart';
 import 'package:store/database/services/items.dart';
-import 'package:store/ui/widgets/rating_bottm.dart';
+//import 'package:store/ui/widgets/rating_bottm.dart';
 import 'package:store/ui/widgets/small_widget.dart';
 import 'package:store/ui/widgets/user_review_card.dart';
 import '../../database/services/controller.dart';
 import '../widgets/generic_app_bar.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 
 class ProductPage extends StatelessWidget {
   final ProdectModel product;
@@ -187,17 +187,17 @@ class ProductPage extends StatelessWidget {
         TextButton(
           onPressed: () {
             if (controller.user.value != null) {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) => BottomSheet(
-                      onClosing: () {},
-                      builder: (context) {
-                        return ratingBottomSheet(product.name, product.id, {
-                          'user_id': controller.user.value!.uid,
-                          'user_name': controller.user.value!.displayName,
-                          'user_image': controller.userData.value.profileImage,
-                        });
-                      }));
+              // showModalBottomSheet(
+              //     context: context,
+              //     builder: (context) => BottomSheet(
+              //         onClosing: () {},
+              //         builder: (context) {
+              //           return ratingBottomSheet(product.name, product.id, {
+              //             'user_id': controller.user.value!.uid,
+              //             'user_name': controller.user.value!.displayName,
+              //             'user_image': controller.userData.value.profileImage,
+              //           });
+              //         }));
             } else {
               showloginRequiredAlert();
             }

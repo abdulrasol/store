@@ -37,6 +37,13 @@
             {
               "client_id": "34195937403-v1dnv1b92pa3j02sod8cq2plefmdd3tt.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "34195937403-3tj2ev66fq2vthadt3p4okc80kdeubk7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.github.dot.store.store"
+              }
             }
           ]
         }
@@ -66,6 +73,13 @@
             {
               "client_id": "34195937403-v1dnv1b92pa3j02sod8cq2plefmdd3tt.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "34195937403-3tj2ev66fq2vthadt3p4okc80kdeubk7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.github.dot.store.store"
+              }
             }
           ]
         }

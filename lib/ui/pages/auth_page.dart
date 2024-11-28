@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:store/database/services/auth.dart';
 import 'package:store/ui/widgets/decoration.dart';
 import 'package:store/ui/widgets/generic_app_bar.dart';
@@ -263,17 +263,17 @@ class _AuthPageState extends State<AuthPage> {
           ),
           sizedBox,
           ElevatedButton(
-            style: ButtonStyle(
-              elevation: WidgetStateProperty.all(2),
-              backgroundColor: MaterialStateProperty.all(Colors.white),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                      10.0), // Set the desired border radius here
-                ),
-              ),
-              minimumSize: MaterialStateProperty.all(const Size(300, 50.0)),
-            ),
+            // style: ButtonStyle(
+            //   elevation: WidgetStateProperty.all(2),
+            //   backgroundColor: MaterialStateProperty.all(Colors.white),
+            //   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            //     RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(
+            //           10.0), // Set the desired border radius here
+            //     ),
+            //   ),
+            //   minimumSize: MaterialStateProperty.all(const Size(300, 50.0)),
+            // ),
             onPressed: () {
               setState(() {
                 createNewUser = !createNewUser;
@@ -440,17 +440,17 @@ class _AuthPageState extends State<AuthPage> {
           ),
           sizedBox,
           ElevatedButton(
-            style: ButtonStyle(
-              elevation: MaterialStateProperty.all(2),
-              backgroundColor: MaterialStateProperty.all(Colors.white),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                      10.0), // Set the desired border radius here
-                ),
-              ),
-              minimumSize: MaterialStateProperty.all(const Size(300, 50.0)),
-            ),
+            // style: ButtonStyle(
+            //   elevation: MaterialStateProperty.all(2),
+            //   backgroundColor: MaterialStateProperty.all(Colors.white),
+            //   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            //     RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(
+            //           10.0), // Set the desired border radius here
+            //     ),
+            //   ),
+            //   minimumSize: MaterialStateProperty.all(const Size(300, 50.0)),
+            // ),
             onPressed: () {
               setState(() {
                 //changeForm(loginForm(inputDecoration));

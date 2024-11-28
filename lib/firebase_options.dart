@@ -27,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -82,4 +79,15 @@ class DefaultFirebaseOptions {
     iosClientId: '34195937403-3tj2ev66fq2vthadt3p4okc80kdeubk7.apps.googleusercontent.com',
     iosBundleId: 'io.github.dot.store.store',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAjhQxdrVH9bE-eMDTt5SERHyBCcdG_fbA',
+    appId: '1:34195937403:web:5b95c81ddbfe8275b3aade',
+    messagingSenderId: '34195937403',
+    projectId: 'grocery-store-9c60a',
+    authDomain: 'grocery-store-9c60a.firebaseapp.com',
+    storageBucket: 'grocery-store-9c60a.appspot.com',
+    measurementId: 'G-HJD8RQ4JGM',
+  );
+
 }

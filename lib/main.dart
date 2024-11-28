@@ -30,6 +30,7 @@ var app = GetMaterialApp(
         color: Colors.black87,
       ),
     ),
+    //useMaterial3: false,
   ),
   routes: {
     //'main': (contect) => const Main(),
